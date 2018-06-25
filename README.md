@@ -1,2 +1,2 @@
-# draft-trammell-tcpm-spin
-The Addition of a Latency Spin Signal to the Transmission Control Protocol
+# draft-trammell-tsvwg-spin
+A Transport-Independent Signal for Passive Latency Measurement
