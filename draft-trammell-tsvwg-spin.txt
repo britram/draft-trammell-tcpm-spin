@@ -80,7 +80,7 @@ Table of Contents
    8.  Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  12
    9.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  12
    10. Informative References  . . . . . . . . . . . . . . . . . . .  12
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  15
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  14
 
 1.  Introduction
 
@@ -674,34 +674,9 @@ Trammell                Expires December 29, 2018              [Page 12]
 Internet-Draft                  Spin Bits                      June 2018
 
 
-   [CONUS]    Morton, A., "Comparison of Backbone Node RTT and Great
-              Circle Distances (https://github.com/acmacm/CONUS-RTT)",
-              September 2017.
-
-   [IMC-CONGESTION]
-              Luckie, M., Dhamdhere, A., Clark, D., Huffaker, B., and k.
-              claffy, "Challenges in Inferring Internet Interdomain
-              Congestion (in Proc. ACM IMC 2014)", November 2014.
-
-   [IMC-TCPSIG]
-              Sundaresan, S., Dhamdhere, A., Allman, M., and . k claffy,
-              "TCP Congestion Signatures (in Proc. ACM IMC 2017)", n.d..
-
    [IPIM]     Allman, M., Beverly, R., and B. Trammell, "Principles for
               Measurability in Protocol Design (ACM CCR 47(2), pp.
               2-12)", April 2017.
-
-   [MINQ]     Rescorla, E., "MINQ, a simple Go implementation of QUIC
-              (https://github.com/ekr/minq)", November 2017.
-
-   [MOKUMOKUREN]
-              Trammell, B., "Mokumokuren, a lightweight flow meter using
-              gopacket (https://github.com/britram/mokumokuren)",
-              November 2017.
-
-   [NOSPIN]   Morton, A., "Description of a tool chain to evaluate
-              Unidirectional Passive RTT measurement (and results)
-              (https://github.com/acmacm/PassiveRTT)", October 2017.
 
    [PAM-RTT-PRIVACY]
               Trammell, B. and M. Kuehlewind, "Revisiting the Privacy
@@ -718,17 +693,6 @@ Internet-Draft                  Spin Bits                      June 2018
               Passive Measurability of Two-Way Latency to the QUIC
               Transport Protocol", draft-trammell-quic-spin-03 (work in
               progress), May 2018.
-
-
-
-
-
-
-
-Trammell                Expires December 29, 2018              [Page 13]
-
-Internet-Draft                  Spin Bits                      June 2018
-
 
    [QUIC-SPIN-EXP]
               Trammell, B. and M. Kuehlewind, "The QUIC Latency Spin
@@ -758,6 +722,14 @@ Internet-Draft                  Spin Bits                      June 2018
               RFC 4443, DOI 10.17487/RFC4443, March 2006,
               <https://www.rfc-editor.org/info/rfc4443>.
 
+
+
+
+Trammell                Expires December 29, 2018              [Page 13]
+
+Internet-Draft                  Spin Bits                      June 2018
+
+
    [RFC7373]  Trammell, B., "Textual Representation of IP Flow
               Information Export (IPFIX) Abstract Data Types", RFC 7373,
               DOI 10.17487/RFC7373, September 2014,
@@ -778,42 +750,14 @@ Internet-Draft                  Spin Bits                      June 2018
               DOI 10.17487/RFC8200, July 2017,
               <https://www.rfc-editor.org/info/rfc8200>.
 
-
-
-
-Trammell                Expires December 29, 2018              [Page 14]
-
-Internet-Draft                  Spin Bits                      June 2018
-
-
-   [SHBAIR]   Shbair, W., Cholez, T., Francois, J., and I. Chrisment, "A
-              multi-level framework to identify HTTPS services (in Proc.
-              IEEE/IFIP NOMS)", April 2016.
-
-   [SPINBIT-REPORT]
-              De Vaere, P., "Latency Spinbit Implementation Experience
-              (https://devae.re/f/eth/quic/spinbit_report/)", November
-              2017.
-
    [TMA-QOF]  Trammell, B., Gugelmann, D., and N. Brownlee, "Inline Data
               Integrity Signals for Passive Measurement (in Proc. TMA
               2014)", April 2014.
-
-   [TOKYO-PING]
-              Pelsser, C., Cittadini, L., Vissicchio, S., and R. Bush,
-              "From Paris to Tokyo - On the Suitability of ping to
-              Measure Latency (ACM IMC 2014)", October 2014.
 
    [WIRE-IMAGE]
               Trammell, B. and M. Kuehlewind, "The Wire Image of a
               Network Protocol", draft-trammell-wire-image-04 (work in
               progress), April 2018.
-
-   [WWMM-BLOAT]
-              Alfredsson, S., Giudice, G., Garcia, J., Brunstrom, A.,
-              Cicco, L., and S. Mascolo, "Impact of TCP Congestion
-              Control on Bufferbloat in Cellular Networks (in Proc. IEEE
-              WoWMoM 2013)", June 2013.
 
    [ZANDER-TS]
               Zander, S. and S. Murdoch, "An Improved Clock-skew
@@ -837,4 +781,4 @@ Author's Address
 
 
 
-Trammell                Expires December 29, 2018              [Page 15]
+Trammell                Expires December 29, 2018              [Page 14]
