@@ -6,7 +6,7 @@ date:
 category: exp
 
 ipr: trust200902
-workgroup: QUIC
+workgroup: TSVWG
 keyword: Internet-Draft
 
 stand_alone: yes
