@@ -1,0 +1,772 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>A Transport-Independent Explicit Signal for Hybrid RTT Measurement</title>
+
+  
+<style type="text/css">/*<![CDATA[*/
+
+body {
+  font: 16px "Helvetica Neue","Open Sans",Helvetica,Calibri,sans-serif;
+  color: #333;
+  font-size-adjust: 0.5;
+  line-height: 24px;
+  margin: 75px auto;
+  max-width: 624px;
+  padding: 0 5px;
+}
+
+.title, .filename, h1, h2, h3, h4, h5 {
+  font: 16px "Roboto Condensed","Helvetica Neue","Open Sans",Helvetica,Calibri,sans-serif;
+  font-size-adjust: 0.5;
+  font-weight: bold;
+  color: #333;
+  line-height: 100%;
+  margin: 0.8em 0 0.3em;
+}
+.title, #rfc\.title h1 { font-size: 32px; }
+h1, section h1, h2, section h2, section h3, nav h2 { font-size: 20px; }
+h3, section h4, h4, section h5 { font-size: 16px; }
+h1 a[href], h2 a[href], h3 a[href], h4 a[href] {
+  color: #333;
+}
+
+table {
+  margin-left: 0em;
+  border-collapse: collapse;
+}
+th {
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+td {
+  border-top: 1px solid #ddd;
+  vertical-align: top;
+}
+tr:nth-child(2n+1) > td,
+tr:nth-child(2n+1) > th {
+  background-color: #f9f9f9;
+}
+td.reference {
+  max-width: 200px;
+  border-top: none;
+  padding-right: 1em;
+}
+.right {
+  text-align: right;
+}
+
+
+table.header, table#rfc\.headerblock {
+  width: 100%;
+}
+table.header td, table#rfc\.headerblock td {
+  border: none;
+  background-color: transparent;
+  color: black;
+  padding: 0;
+}
+.filename {
+  display: block;
+  color: rgb(119, 119, 119);
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 100%;
+  margin: 10px 0 32px;
+}
+#rfc\.abstract+p, #rfc\.abstract p {
+  font-size: 20px;
+  line-height: 28px;
+}
+
+samp, tt, code, pre {
+  font: 15px Consolas, monospace;
+  font-size-adjust: none;
+}
+pre {
+  background-color: #eee;
+  border: 1px solid #ddd;
+  overflow-x: auto;
+  padding: 5px;
+  margin: 5px;
+}
+.figure, caption {
+  font-style: italic;
+  margin: 0 1.5em;
+  text-align: left;
+}
+
+address {
+  margin: 16px 2px;
+  line-height: 20px;
+}
+.vcard {
+  font-style: normal;
+}
+.vcardline {
+  display: block;
+}
+.vcardline .fn, address b {
+  font-weight: normal;
+}
+.vcardline .hidden {
+  display: none;
+}
+
+dl {
+  margin-left: 1em;
+}
+dl.dl-horizontal: {
+  margin-left: 0;
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl.nohang > dt {
+  float: none;
+}
+dl > dd {
+  margin-bottom: .5em;
+}
+dl.compact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+ul.empty {
+  list-style-type: none;
+}
+ul.empty li {
+  margin-top: .5em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+}
+hr.noprint {
+  display: none;
+}
+
+a {
+  text-decoration: none;
+}
+a[href] {
+  color: #2a6496;
+}
+a[href]:hover {
+  background-color: #eee;
+}
+
+ol, ul, li, p {
+  padding: 0;
+  margin: 0.5em 0 0.5em 2em;
+}
+li, p {
+  margin-left: 0;
+}
+address {
+  font-style: normal;
+}
+
+ul.toc ul {
+  margin: 0 0 0 2em;
+}
+ul.toc li {
+  list-style: none;
+  margin: 0;
+}
+
+@media screen and (min-width: 924px) {
+  body {
+    padding-right: 350px;
+  }
+  body>ul.toc, body>#rfc\.toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 500px);
+    width: 300px;
+    z-index: 1;
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  body>#rfc\.toc {
+    top: 55px;
+  }
+  body>ul.toc {
+    top: 100px;
+  }
+
+  ul.toc {
+    margin: 0 0 0 4px;
+    font-size: 12px;
+    line-height: 20px;
+  }
+  ul.toc ul {
+    margin-left: 1.2em;
+  }
+}
+
+.github-fork-ribbon-wrapper {
+  display: none;
+}
+@media screen and (min-width: 800px) {
+  /* "Fork me on GitHub" CSS ribbon based on
+   * https://github.com/simonwhitaker/github-fork-ribbon-css
+   */
+  .github-fork-ribbon {
+    position: absolute;
+    padding: 2px 0;
+    background-color: #a00;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.5);
+    font: 700 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    pointer-events: auto;
+
+    top: 38px;
+    right: -45px;
+
+    transform: rotate(45deg);
+  }
+
+  .github-fork-ribbon a[href],
+  .github-fork-ribbon a[href]:hover {
+    color: #fff;
+    background-color: transparent;
+    text-decoration: none;
+    text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+    text-align: center;
+
+    width: 190px;
+    line-height: 18px;
+
+    display: inline-block;
+    padding: 2px 0;
+
+    border: 1.5px dotted #fff;
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .github-fork-ribbon-wrapper {
+    display: block;
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    overflow: hidden;
+    top: 0; right: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .github-fork-ribbon-wrapper {
+    position: fixed;
+  }
+/*]]>*/</style>
+<meta name="viewport" content="initial-scale=1.0">
+
+
+  <link href="#rfc.toc" rel="Contents">
+<link href="#rfc.section.1" rel="Chapter" title="1 Introduction">
+<link href="#rfc.section.2" rel="Chapter" title="2 Signal Generation Mechanism">
+<link href="#rfc.section.2.1" rel="Chapter" title="2.1 Illustrating the Mechanism">
+<link href="#rfc.section.3" rel="Chapter" title="3 Using the Signal for Hybrid RTT Measurement">
+<link href="#rfc.section.4" rel="Chapter" title="4 Binding the Hybrid RTT Measurement Signal to Transport Protocols">
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 QUIC">
+<link href="#rfc.section.4.2" rel="Chapter" title="4.2 TCP">
+<link href="#rfc.section.5" rel="Chapter" title="5 Discussion">
+<link href="#rfc.section.5.1" rel="Chapter" title="5.1 Why the transport layer?">
+<link href="#rfc.section.6" rel="Chapter" title="6 Privacy and Security Considerations">
+<link href="#rfc.section.7" rel="Chapter" title="7 IANA Considerations">
+<link href="#rfc.section.8" rel="Chapter" title="8 Contributors">
+<link href="#rfc.section.9" rel="Chapter" title="9 Acknowledgments">
+<link href="#rfc.references" rel="Chapter" title="10 Informative References">
+<link href="#rfc.authors" rel="Chapter">
+
+
+  <meta name="generator" content="xml2rfc version 2.8.0 - https://tools.ietf.org/tools/xml2rfc" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="Trammell, B., Ed." />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-trammell-tsvwg-spin-latest" />
+  <meta name="dct.issued" scheme="ISO8601" content="2018-6-27" />
+  <meta name="dct.abstract" content="This document defines an explicit per-flow transport-layer signal for hybrid measurement of end-to-end RTT. This signal consists of three bits: a spin bit, which oscillates once per end-to-end RTT, and a two-bit Valid Edge Counter (VEC), which compensates for loss and reordering of the spin bit to increase fidelity of the signal in less than ideal network conditions. It describes the algorithm for generating the signal, approaches for observing it to passively measure end-to-end latency, and proposes methods for adding it to a variety of IETF transport protocols." />
+  <meta name="description" content="This document defines an explicit per-flow transport-layer signal for hybrid measurement of end-to-end RTT. This signal consists of three bits: a spin bit, which oscillates once per end-to-end RTT, and a two-bit Valid Edge Counter (VEC), which compensates for loss and reordering of the spin bit to increase fidelity of the signal in less than ideal network conditions. It describes the algorithm for generating the signal, approaches for observing it to passively measure end-to-end latency, and proposes methods for adding it to a variety of IETF transport protocols." />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+<td class="left">QUIC</td>
+<td class="right">B. Trammell, Ed.</td>
+</tr>
+<tr>
+<td class="left">Internet-Draft</td>
+<td class="right">ETH Zurich</td>
+</tr>
+<tr>
+<td class="left">Intended status: Experimental</td>
+<td class="right">June 27, 2018</td>
+</tr>
+<tr>
+<td class="left">Expires: December 29, 2018</td>
+<td class="right"></td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">A Transport-Independent Explicit Signal for Hybrid RTT Measurement<br />
+  <span class="filename">draft-trammell-tsvwg-spin-latest</span></p>
+  
+  <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
+<p>This document defines an explicit per-flow transport-layer signal for hybrid measurement of end-to-end RTT. This signal consists of three bits: a spin bit, which oscillates once per end-to-end RTT, and a two-bit Valid Edge Counter (VEC), which compensates for loss and reordering of the spin bit to increase fidelity of the signal in less than ideal network conditions. It describes the algorithm for generating the signal, approaches for observing it to passively measure end-to-end latency, and proposes methods for adding it to a variety of IETF transport protocols.</p>
+<h1 id="rfc.status"><a href="#rfc.status">Status of This Memo</a></h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on December 29, 2018.</p>
+<h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
+<p>Copyright (c) 2018 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Introduction</a>
+</li>
+<li>2.   <a href="#rfc.section.2">Signal Generation Mechanism</a>
+</li>
+<ul><li>2.1.   <a href="#rfc.section.2.1">Illustrating the Mechanism</a>
+</li>
+</ul><li>3.   <a href="#rfc.section.3">Using the Signal for Hybrid RTT Measurement</a>
+</li>
+<li>4.   <a href="#rfc.section.4">Binding the Hybrid RTT Measurement Signal to Transport Protocols</a>
+</li>
+<ul><li>4.1.   <a href="#rfc.section.4.1">QUIC</a>
+</li>
+<li>4.2.   <a href="#rfc.section.4.2">TCP</a>
+</li>
+</ul><li>5.   <a href="#rfc.section.5">Discussion</a>
+</li>
+<ul><li>5.1.   <a href="#rfc.section.5.1">Why the transport layer?</a>
+</li>
+</ul><li>6.   <a href="#rfc.section.6">Privacy and Security Considerations</a>
+</li>
+<li>7.   <a href="#rfc.section.7">IANA Considerations</a>
+</li>
+<li>8.   <a href="#rfc.section.8">Contributors</a>
+</li>
+<li>9.   <a href="#rfc.section.9">Acknowledgments</a>
+</li>
+<li>10.   <a href="#rfc.references">Informative References</a>
+</li>
+<li><a href="#rfc.authors">Author's Address</a>
+</li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1">
+<a href="#rfc.section.1">1.</a> <a href="#introduction" id="introduction">Introduction</a>
+</h1>
+<p id="rfc.section.1.p.1">Latency is a key metric to understanding network operation and performance, and passive measurability of round trip times (RTT) is a useful and important, if generally unintentional, feature of many transport protocols. Passive measurement allows inspection of latency on productive traffic, avoiding problems with different treatment of productive and measurement traffic, and enables opportunistic measurement of latency without active measurement overhead.</p>
+<p id="rfc.section.1.p.2">However, since these features are largely accidental, methods for passive latency measurement are transport-dependent, and different heuristics for deriving metrics from these accidental signals may lead to non-comparable values. For example, methods applicable can be exclusively based on the TCP timestamp option <a href="#RFC7373" class="xref">[RFC7373]</a> (see <a href="#CACM-TCP" class="xref">[CACM-TCP]</a>), leverage both timestamps and matching sequence and acknowledgment numbers (see <a href="#TMA-QOF" class="xref">[TMA-QOF]</a>), or rely on ACK-clocking in flows transmitting at a stable rate (see <a href="#CARRA-RTT" class="xref">[CARRA-RTT]</a>). In addition, they rely on features that may change or have undesirable side effects. For example, <a href="#CARRA-RTT" class="xref">[CARRA-RTT]</a> makes implicit assumptions about congestion control and pacing that may not hold for all senders, and timestamp-based methods require the TCP timestamp option to operate effectively, which adds 10 bytes of overhead to every packet and provides a relatively large amount of information for sender fingerprinting <a href="#ZANDER-TS" class="xref">[ZANDER-TS]</a>.</p>
+<p id="rfc.section.1.p.3">This document defines a hybrid measurement <a href="#RFC7799" class="xref">[RFC7799]</a> path signal <a href="#PATH-SIGNALS" class="xref">[PATH-SIGNALS]</a> to be embedded into a transport layer protocol, explicitly intended for exposing end-to-end RTT to measurement devices on path, following the principles elaborated in <a href="#IPIM" class="xref">[IPIM]</a>. This signal consists of three bits: a spin bit, which oscillates once per end-to-end RTT, and a two-bit Valid Edge Counter (VEC), which compensates for loss and reordering of the spin bit to increase fidelity of the signal in less than ideal network conditions.</p>
+<p id="rfc.section.1.p.4">The document starts with a mechanism applicable to any transport-layer protocol, then explains how to bind the signal to a variety of IETF transport protocols, and describes a measurement methdology for deriving RTT samples from the signal.</p>
+<h1 id="rfc.section.2">
+<a href="#rfc.section.2">2.</a> <a href="#mechanism" id="mechanism">Signal Generation Mechanism</a>
+</h1>
+<p id="rfc.section.2.p.1">The hybrid RTT measurement signal consists of two parts:</p>
+<p></p>
+
+<ul>
+<li>a spin bit, which oscillates once per end-to-end RTT. Measuring the time between observed edges in the spin bit therefore provides an RTT sample.</li>
+<li>a valid edge counter (VEC), which serves to reject edges in the spin bit signal which are invalid, due to loss, reordering, or delay.</li>
+</ul>
+<p id="rfc.section.2.p.3">This signal is encoded as three bits in the transport-layer header, or as a transport-layer option or extension, and the mechanism for generating these bits consists of a receive-side procedure for updating signal state, and a send-side procedure for encoding the signal on a packet.</p>
+<p id="rfc.section.2.p.4">On receiving a packet on a given connection, the receiver:</p>
+<p></p>
+
+<ol>
+<li>checks to see whether the packet is the latest packet for the connection.  If not, it does not update any signal state. The method for determining whether a packet is the latest packet in a connection is necessarily transport-dependent.</li>
+<li>takes the spin bit from the incoming packet and updates its NEXT_SPIN value for the connection. If the receiver was the responder (server) of the connection, it sets NEXT_SPIN to the to the spin bit on the incoming packet. If the receiver was the initiator (client) of the connection, it sets NEXT_SPIN to the inverse of the spin bit on the incoming packet.</li>
+<li>updates its NEXT_VEC value for the connection as follows. If the incoming spin bit value is the same as LAST_SPIN (see below), it sets NEXT_VEC to 0.  Otherwise, if the incoming VEC value is 3, it sets NEXT_VEC to 3.  Otherwise, it sets NEXT_VEC to the incoming VEC value plus 1.</li>
+<li>stores the value of the incoming spin bit as LAST_RECV_SPIN for subsequent VEC generation.</li>
+<li>stores the time at which this packet was received as RECV_TIME.</li>
+</ol>
+<p id="rfc.section.2.p.6">On sending a packet on a given connection, the sender:</p>
+<p></p>
+
+<ol>
+<li>sets the outgoing spin bit to NEXT_SPIN</li>
+<li>sets the outgoing VEC to 0 if NEXT_SPIN is the same as LAST_SENT_SPIN.  Otherwise, it compares the current system time to RECV_TIME. If more than a configurable delay has passed since RECV_TIME, it sets the outgoing VEC to max(NEXT_VEC, 1). Otherwise, it sets the outgoing VEC to NEXT_VEC</li>
+</ol>
+<p id="rfc.section.2.p.8">This mechanism causes the spin bit to oscillate once per round trip time, and the VEC to count up to 3 and hold on each edge on the spin bit signal, in the absence of lost or reordered edges. Delays in sending an edge due to quiescence cause the VEC to reset to 1. Observation points can therefore estimate the end-to-end latency by observing these edges, as described in <a href="#usage" class="xref">Section 3</a>. See <a href="#illustration" class="xref">Section 2.1</a>, below, for an illustration of this mechanism in action.</p>
+<h1 id="rfc.section.2.1">
+<a href="#rfc.section.2.1">2.1.</a> <a href="#illustration" id="illustration">Illustrating the Mechanism</a>
+</h1>
+<p id="rfc.section.2.1.p.1">To illustrate the operation of this signal, we consider a simplified model of a single bidirectional path between client and server as a queue with slots for five packets, and assume that both client and server sent packets at a constant rate. If each packet moves one slot in the queue per clock tick, note that this network has a RTT of 10 ticks. In the figures below, the signal is shown as two characters. The first denotes the value of the spin bit (^ = 1, v = 0), the second the value of the VEC (0-3). &#8211; means no packet in flight.</p>
+<p id="rfc.section.2.1.p.2">Initially, no packets are in flight, so there is no signal, as shown in <a href="#illus0" class="xref">Figure 1</a>.</p>
+<div id="rfc.figure.1"></div>
+<div id="illus0"></div>
+<pre>
++--------+   --  --  --  --  --   +--------+
+|        |       -----------&gt;     |        |
+| Client |                        | Server |
+|        |      &lt;-----------      |        |
++--------+   --  --  --  --  --   +--------+
+</pre>
+<p class="figure">Figure 1: Initial state, no packets between client and server</p>
+<p id="rfc.section.2.1.p.3">The client begins sending packets with the spin bit and VEC set to zero, as shown in <a href="#illus1" class="xref">Figure 2</a>.</p>
+<div id="rfc.figure.2"></div>
+<div id="illus1"></div>
+<pre>
++--------+   v0  v0  v0  --  --   +--------+
+|        |       -----------&gt;     |        |
+| Client |                        | Server |
+|        |      &lt;-----------      |        |
++--------+   --  --  --  --  --   +--------+
+</pre>
+<p class="figure">Figure 2: Client begins sending packets</p>
+<p id="rfc.section.2.1.p.4">The first packet arrives at the server five ticks later. It reflects the spin bit, and increments the VEC on its first packet, as shown in <a href="#illus2" class="xref">Figure 3</a>.</p>
+<div id="rfc.figure.3"></div>
+<div id="illus2"></div>
+<pre>
++--------+   v0  v0  v0  v0  v0   +--------+
+|        |       -----------&gt;     |        |
+| Client |                        | Server |
+|        |      &lt;-----------      |        |
++--------+   --  --  v1  v0  v0   +--------+
+</pre>
+<p class="figure">Figure 3: Server reflects first packet, sets edge</p>
+<p id="rfc.section.2.1.p.5">When the client receives this edge, again five ticks later, it inverts the spin bit and increments the VEC, as shown in <a href="#illus3" class="xref">Figure 4</a>. In this way, the spin signal begins to oscillate around the path, with one edge in flight at any given time.</p>
+<div id="rfc.figure.4"></div>
+<div id="illus3"></div>
+<pre>
++--------+   ^0  ^0  ^2  v0  v0   +--------+
+|        |       -----------&gt;     |        |
+| Client |                        | Server |
+|        |      &lt;-----------      |        |
++--------+   v0  v0  v0  v0  v0   +--------+
+</pre>
+<p class="figure">Figure 4: Client inverts spin bit, increments edge</p>
+<p id="rfc.section.2.1.p.6">And in turn, when this edge reaches the server, the VEC increments again, reaching its stable value of 3, as shown in <a href="#illus4" class="xref">Figure 5</a>.</p>
+<div id="rfc.figure.5"></div>
+<div id="illus4"></div>
+<pre>
+observation
+points               X    Y
++--------+   ^0  ^0  ^0  ^0  ^0   +--------+
+|        |       -----------&gt;     |        |
+| Client |                        | Server |
+|        |      &lt;-----------      |        |
++--------+   v0  v0  ^3  ^0  ^0   +--------+
+                          Y
+</pre>
+<p class="figure">Figure 5: Server reflects edge, increments VEC</p>
+<p id="rfc.section.2.1.p.7">Here we can also see how measurement works. An observer watching the signal at single observation point X in <a href="#illus4" class="xref">Figure 5</a> will see an edge every 10 ticks, i.e.  once per RTT. An observer watching the signal at a symmetric observation point Y in <a href="#illus4" class="xref">Figure 5</a> will see a server-client edge 4 ticks after the client-server edge, and a client-server edge 6 ticks after the server-client edge, allowing it to compute the components of RTT between itself and the client and between itself and the server.</p>
+<div id="rfc.figure.6"></div>
+<div id="illus5"></div>
+<pre>
++--------+   v0  v0  v0  v0  v0   +--------+
+|        |       -----------&gt;     |        |
+| Client |                        | Server |
+|        |      &lt;-----------      |        |
++--------+   ^0  v3  ^0  v0  v0   +--------+
+   packet     A   C   B   D   E
+</pre>
+<p class="figure">Figure 6: How the VEC detects reordering</p>
+<p><a href="#illus5" class="xref">Figure 6</a> shows how this mechanism works in the presence of reordering. Here, we assume the transport provides some form of packet sequencing (such as QUIC <a href="#QUIC-TRANSPORT" class="xref">[QUIC-TRANSPORT]</a> packet numbers or TCP <a href="#RFC0793" class="xref">[RFC0793]</a> sequence numbers). Packet C carries the spin edge, and packet B is reordered on the way to the client. In this case, the client will begin sending spin 1 after the arrival of packet C, and ignore the spin bit flip to 1 on packet B, since B &lt; C; i.e. it does not increment the highest packet number seen. An on-path ovserver can also reject the spurious edges carried by packets B and D, even without knowledge of the transport protocol&#8217;s sequence numbering (or, as is the case with QUIC, when the transport protocol&#8217;s sequence numbering is encrypted), since the VEC is 0 on these packets.</p>
+<h1 id="rfc.section.3">
+<a href="#rfc.section.3">3.</a> <a href="#usage" id="usage">Using the Signal for Hybrid RTT Measurement</a>
+</h1>
+<p id="rfc.section.3.p.1">When at least one sender is sending packets at full rate (i.e., is neither application nor flow-control limited), and the other sender is sending at least one packet per RTT (e.g. as is the case with the TCP acknowledgment-only packets on), the spin bit oscillates once per RTT, and the VEC counts up to 3 and holds on the edges in the spin bit (the first packet carrying a new spin bit value in each direction). An on-path observer can observe the time difference between these edges in the spin bit signal in a single direction to measure one sample of end-to-end RTT. Note that this measurement, as with transport-specific passive RTT measurement, includes any transport protocol delay (e.g., delayed sending of acknowledgements) and/or application layer delay (e.g., waiting for a request to complete). These RTT samples can be used</p>
+<p id="rfc.section.3.p.2">The VEC can be used by observers to determine whether an edge in the spin bit signal is valid or not, as follows:</p>
+<p></p>
+
+<ul>
+<li>A packet containing an apparent edge in the spin signal with a VEC of 0 is not a valid edge, but may be have been caused by reordering or loss, or was marked as delayed by the sender. It should therefore be ignored.</li>
+<li>A packet containing an apparent edge in the spin signal with a VEC of 1 can be used as a left edge (i.e., to start measuring an RTT sample), but not as a right edge (i.e., to take an RTT sample since the last edge).</li>
+<li>A packet containing an apparent edge in the spin signal with a VEC of 2 can be used as a left edge, but not as a right edge. If the observation point is symmetric (i.e, it can see both upstream and downstream packets in the flow), the packet can also be used to take a component RTT sample on the segment of the path between the observation point and the direction in which the previous VEC 1 edge was seen.</li>
+<li>A packet containing an apparent edge in the spin signal with a VEC of 3 can be used as a left edge or right edge, and can be used to compute component RTT in either direction.</li>
+</ul>
+<p id="rfc.section.3.p.4">Taking only valid samples ensures that the RTT estimate provided is accurate.  However, in some situations, it may result in a low sample rate. Since the VEC resets to one when a sender determines that its edge is delayed, bursty traffic on one side of the connection will cause the VEC not to count up to 3 very often. Likewise, a connection on which many edges are lost (because the connection itself is very lossy) will cause many samples to be rejected as well. Observers may choose to use heuristics in addition to VEC analysis to increase the sample rate in challenging network or traffic environments.</p>
+<h1 id="rfc.section.4">
+<a href="#rfc.section.4">4.</a> <a href="#binding-the-hybrid-rtt-measurement-signal-to-transport-protocols" id="binding-the-hybrid-rtt-measurement-signal-to-transport-protocols">Binding the Hybrid RTT Measurement Signal to Transport Protocols</a>
+</h1>
+<p id="rfc.section.4.p.1">The following subsections define how to bind the spin bit to various IETF transport protocols. As of this writing, bindings are specified for QUIC and TCP.</p>
+<h1 id="rfc.section.4.1">
+<a href="#rfc.section.4.1">4.1.</a> <a href="#quic" id="quic">QUIC</a>
+</h1>
+<p id="rfc.section.4.1.p.1">This signal was originally specified for the QUIC transport protocol <a href="#QUIC-TRANSPORT" class="xref">[QUIC-TRANSPORT]</a>, as the encrypted design of that protocol makes passive RTT measurement impossible. The binding of this signal to QUIC is partially described in <a href="#QUIC-SPIN-EXP" class="xref">[QUIC-SPIN-EXP]</a>, which adds the spin bit only (without the VEC) to QUIC for experimentation purposes.</p>
+<p id="rfc.section.4.1.p.2">The full signal can be added to QUIC by adding the VEC mechanism to the spin bit mechanism already defined in <a href="#QUIC-SPIN-EXP" class="xref">[QUIC-SPIN-EXP]</a>, encoding the VEC into QUIC short packet headers using the three bits reserved for that purpose, as shown in <a href="#quic-hdr" class="xref">Figure 7</a>.</p>
+<div id="rfc.figure.7"></div>
+<div id="quic-hdr"></div>
+<pre>
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+
+|0|K|1|1|0|S|VEC|
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                Destination Connection ID (0..144)           ...
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                      Packet Number (8/16/32)                ...
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                     Protected Payload (*)                   ...
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+</pre>
+<p class="figure">Figure 7: QUIC short packet header with spin bit S and VEC</p>
+<p id="rfc.section.4.1.p.3">The &#8220;latest packet&#8221; determination for QUIC is made using the QUIC packet number: only packets which have a packet number greater than the highest packet number seen are considered when generating the signal.</p>
+<p id="rfc.section.4.1.p.4">Note that, when used with QUIC, the signal only appears on short header packets; long header packets are ignored for the purposes of generating the signal. Since either the client or the server may start sending short header packets first, both sides initialize their NEXT_SPIN value to 0.</p>
+<h1 id="rfc.section.4.2">
+<a href="#rfc.section.4.2">4.2.</a> <a href="#tcp" id="tcp">TCP</a>
+</h1>
+<p id="rfc.section.4.2.p.1">The signal can be added to TCP by defining bit 4 of bytes 13-14 of the TCP header to carry the spin bit, and bits 5 and 6 to carry the VEC, as shown in <a href="#tcp-flags" class="xref">Figure 8</a>.</p>
+<div id="rfc.figure.8"></div>
+<div id="tcp-flags"></div>
+<pre>
+  0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
++---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+|               |   |       | R | C | E | U | A | P | R | S | F |
+| Header Length | S |  VEC  | s | W | C | R | C | S | S | Y | I |
+|               |   |       | v | R | E | G | K | H | T | N | N |
++---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+</pre>
+<p class="figure">Figure 8: Definition bytes 13 and 14 of TCP header with spin bit S and VEC</p>
+<p id="rfc.section.4.2.p.2">The &#8220;latest packet&#8221; determination for TCP is made using the TCP sequence and acknowledgment numbers: only packets which have a sequence number greater than highest sequence number seen, accounting for wraparound, or which have a sequence number equal to the last sequence number seen and an acknowledgment number higher than the highest acknowledgment number seen, accounting for wraparound, are considered when generating the signal.</p>
+<p id="rfc.section.4.2.p.3">Since use of the reserved bits may cause connectivity issues in situations where overzealous interpretation by devices on path of &#8220;must be zero&#8221; for the reserved bits in byte 13 of the TCP header <a href="#RFC0793" class="xref">[RFC0793]</a>, the addition of the signal to TCP includes a simple fallback mechanism. The client sets NEXT_SPIN to 1 and NEXT_VEC to 0 on its initial SYN. If this SYN is lost, the client disables generation of the signal for the life of the connection.</p>
+<h1 id="rfc.section.5">
+<a href="#rfc.section.5">5.</a> <a href="#discussion" id="discussion">Discussion</a>
+</h1>
+<p id="rfc.section.5.p.1">This signal is the result of work carried out in various BoFs and working groups in the IETF. This section attempts to answer questions that have been posed in those contexts about approaches such as that outlined in this document.</p>
+<p id="rfc.section.5.p.2">Additional discussion of privacy and security relevant questions is given in <a href="#privsec" class="xref">Section 6</a></p>
+<h1 id="rfc.section.5.1">
+<a href="#rfc.section.5.1">5.1.</a> <a href="#why-the-transport-layer" id="why-the-transport-layer">Why the transport layer?</a>
+</h1>
+<p id="rfc.section.5.1.p.1">As this path signal is (by definition) designed for consumption by devices on the path, and the transport layer is designed for end-to-end operation, an obvious question presents itself: isn&#8217;t this a layer violation? The answer is both &#8220;not really&#8221; and &#8220;it doesn&#8217;t matter&#8221;.</p>
+<p id="rfc.section.5.1.p.2">The signal defined in this document is designed to measure per-connection, end-to-end RTT. The per-connection nature of the signal leverages the assumption that all packets of a given connection will be routed over the same path over a given time interval (on the scale of multiple RTTs) to ensure observability at all points along the path</p>
+<p id="rfc.section.5.1.p.3">While this metric contains both network and endpoint delay components, its applicability is greater than one which measures network components alone (as ICMP Echo <a href="#RFC0792" class="xref">[RFC0792]</a> <a href="#RFC4443" class="xref">[RFC4443]</a> is designed to do), as it better tracks user-experienced performance. As it is necessarily a per-connection signal, it is best carried at the transport layer.</p>
+<p id="rfc.section.5.1.p.4">In any case, adding this signal to network layer protocols is unlikely to prove deployable. IPv6 hop-by-hop and destination options <a href="#RFC8200" class="xref">[RFC8200]</a> do not work on a significant minority of measured network paths <a href="#RFC7872" class="xref">[RFC7872]</a>, and IPv4 <a href="#RFC0791" class="xref">[RFC0791]</a> options are even less usable.</p>
+<h1 id="rfc.section.6">
+<a href="#rfc.section.6">6.</a> <a href="#privsec" id="privsec">Privacy and Security Considerations</a>
+</h1>
+<p id="rfc.section.6.p.1">The privacy considerations for the hybrid RTT measurement signal are essentially the same as those for passive RTT measurement in general.</p>
+<p id="rfc.section.6.p.2">A question was raised during the discussion of this signal within the QUIC working group and the QUIC RTT Design Team: does passive RTT measurement pose a privacy risk? The short answer is no <a href="#PAM-RTT-PRIVACY" class="xref">[PAM-RTT-PRIVACY]</a>. Normal variations in Internet RTT are great enough that RTT measurements are not useful for geolocation of an endpoint beyond the resolution and error avaiable with even low-quality, freely-available IP address geolocation. In the event that the true endpoint address is not known (for example, in the case of anonymity networks), latency information could be used for deanonymization. However, in this case, the signal will not carry end-to-end RTT, rather exit-to-public-end RTT, as these networks typically terminate transport-layer connections.</p>
+<p id="rfc.section.6.p.3">RTT information may be used to infer the occupancy of queues along a path; indeed, this is part of its utility for performance measurement and diagnostics. When a link on a given path has excessive buffering (on the order of hundreds of milliseconds or more), such that the difference in delay between an empty queue and a full queue dwarfs normal variance and RTT along the path, RTT variance during the lifetime of a flow can be used to infer the presence of traffic on the bottleneck link. In practice, however, this is not a concern for hybrid measurement of congestion-controlled traffic, since any observer in a situation to observe RTT passively need not infer the presence of the traffic, as it can observe it directly.</p>
+<p id="rfc.section.6.p.4">In addition, since RTT information contains application as well as network delay, patterns in RTT variance from minimum, and therefore application delay, can be used to infer or fingerprint application-layer behavior. However, as with the case above, this is not a concern with passive measurement, since the packet size and interarrival time sequence, which is also directly observable, carries more information than RTT variance sequence.</p>
+<p id="rfc.section.6.p.5">We therefore conclude that the high-resolution, per-flow exposure of RTT for passive measurement as provided by this signal poses negligible marginal risk to privacy.</p>
+<p id="rfc.section.6.p.6">Since the hybrid RTT measurement signal is disconnected from transport mechanics, an endpoint implementing the signal that has a model of the actual network RTT and a target RTT to expose can &#8220;lie&#8221; about its spin bit edges, by anticipating or delaying observed edges, even without coordination with and the collusion of the other endpoint. When passive measurement is used for purposes where one endpoint might gain a material advantage by representing a false RTT, e.g. SLA verification or enforcement of telecommunications regulations, this situation raises a question about the trustworthiness of the RTT measurements produced from this signals</p>
+<p id="rfc.section.6.p.7">This issue must be appreciated by users of information produced from sampling the hybrid RTT measurement signal. In the case of TCP, mitigation is trivial as existing passive measurement methods can be used to verify the operation of the signal. The case of QUIC is harder, as in the general case it is impossible to verify explicit path signals with two complicit endpoints connected via an encrypted channel (see <a href="#WIRE-IMAGE" class="xref">[WIRE-IMAGE]</a>). However, here there are also verification methods possible. A lying server could be contacted by an honest client under the control of a verifying party, and the client&#8217;s RTT estimate compared with the spin-bit exposed estimate. A server/client pair that collaborate to lie may be subject to dynamic analysis along paths with known RTTs. We consider the ease of verification of lying in situations where this would be prohibited by regulation or contract, combined with the consequences of violation of said regulation or contract, to be a sufficient incentive in the general case not to do it.</p>
+<h1 id="rfc.section.7">
+<a href="#rfc.section.7">7.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a>
+</h1>
+<p id="rfc.section.7.p.1">This document requests the following assignments in the TCP Header Flags registry:</p>
+<p></p>
+
+<ul>
+<li>Bit 4: Hybrid RTT Measurement Spin Bit, as defined in this document</li>
+<li>Bit 5: Hybrid RTT Measurement Valid Edge Counter, high-order bit, as defined in this document</li>
+<li>Bit 6: Hybrid RTT Measurement Valid Edge Counter, low-order bit, as defined in this document</li>
+</ul>
+<h1 id="rfc.section.8">
+<a href="#rfc.section.8">8.</a> <a href="#contributors" id="contributors">Contributors</a>
+</h1>
+<p id="rfc.section.8.p.1">This work is based in part on <a href="#QUIC-SPIN" class="xref">[QUIC-SPIN]</a>, of which it is a generalization. In addition to the editor(s) and author(s) of this document, <a href="#QUIC-SPIN" class="xref">[QUIC-SPIN]</a> was the work of Piet De Vaere, Roni Even, Giuseppe Fioccola, Thomas Fossati, Marcus Ihlar, Al Morton, and Emile Stephan.</p>
+<h1 id="rfc.section.9">
+<a href="#rfc.section.9">9.</a> <a href="#acknowledgments" id="acknowledgments">Acknowledgments</a>
+</h1>
+<p id="rfc.section.9.p.1">Many thanks to Christian Huitema, who originally proposed the spin bit as pull request 609 on <a href="#QUIC-TRANSPORT" class="xref">[QUIC-TRANSPORT]</a>. Thanks to Tobias Buehler for feedback on the draft, and for Alexandre Ferrieux for input on the Valid Edge Counter. Special thanks to the QUIC RTT Design Team for discussions leading especially to the privacy and security considerations section.</p>
+<p id="rfc.section.9.p.2">This work is partially supported by the European Commission under Horizon 2020 grant agreement no. 688421 Measurement and Architecture for a Middleboxed Internet (MAMI), and by the Swiss State Secretariat for Education, Research, and Innovation under contract no. 15.0268. This support does not imply endorsement.</p>
+<h1 id="rfc.references">
+<a href="#rfc.references">10.</a> Informative References</h1>
+<table><tbody>
+<tr>
+<td class="reference"><b id="CACM-TCP">[CACM-TCP]</b></td>
+<td class="top">
+<a>Strowes, S.</a>, "<a>Passively Measuring TCP Round-Trip Times (in Communications of the ACM)</a>", October 2013.</td>
+</tr>
+<tr>
+<td class="reference"><b id="CARRA-RTT">[CARRA-RTT]</b></td>
+<td class="top">
+<a>Carra, D.</a>, <a>Avrachenkov, K.</a>, <a>Alouf, S.</a>, <a>Blanc, A.</a>, <a>Nain, P.</a> and <a>G. Post</a>, "<a>Passive Online RTT Estimation for Flow-Aware Routers Using One-Way Traffic (NETWORKING 2010, LNCS 6091, pp. 109&#8211;121)</a>", 2010.</td>
+</tr>
+<tr>
+<td class="reference"><b id="CONUS">[CONUS]</b></td>
+<td class="top">
+<a>Morton, A.</a>, "<a>Comparison of Backbone Node RTT and Great Circle Distances (https://github.com/acmacm/CONUS-RTT)</a>", September 2017.</td>
+</tr>
+<tr>
+<td class="reference"><b id="IMC-CONGESTION">[IMC-CONGESTION]</b></td>
+<td class="top">
+<a>Luckie, M.</a>, <a>Dhamdhere, A.</a>, <a>Clark, D.</a>, <a>Huffaker, B.</a> and <a>k. claffy</a>, "<a>Challenges in Inferring Internet Interdomain Congestion (in Proc. ACM IMC 2014)</a>", November 2014.</td>
+</tr>
+<tr>
+<td class="reference"><b id="IMC-TCPSIG">[IMC-TCPSIG]</b></td>
+<td class="top">
+<a>Sundaresan, S.</a>, <a>Dhamdhere, A.</a>, <a>Allman, M.</a> and <a>. k claffy</a>, "<a>TCP Congestion Signatures (in Proc. ACM IMC 2017)</a>", n.d..</td>
+</tr>
+<tr>
+<td class="reference"><b id="IPIM">[IPIM]</b></td>
+<td class="top">
+<a>Allman, M.</a>, <a>Beverly, R.</a> and <a>B. Trammell</a>, "<a>Principles for Measurability in Protocol Design (ACM CCR 47(2), pp. 2-12)</a>", April 2017.</td>
+</tr>
+<tr>
+<td class="reference"><b id="MINQ">[MINQ]</b></td>
+<td class="top">
+<a>Rescorla, E.</a>, "<a>MINQ, a simple Go implementation of QUIC (https://github.com/ekr/minq)</a>", November 2017.</td>
+</tr>
+<tr>
+<td class="reference"><b id="MOKUMOKUREN">[MOKUMOKUREN]</b></td>
+<td class="top">
+<a>Trammell, B.</a>, "<a>Mokumokuren, a lightweight flow meter using gopacket (https://github.com/britram/mokumokuren)</a>", November 2017.</td>
+</tr>
+<tr>
+<td class="reference"><b id="NOSPIN">[NOSPIN]</b></td>
+<td class="top">
+<a>Morton, A.</a>, "<a>Description of a tool chain to evaluate Unidirectional Passive RTT measurement (and results) (https://github.com/acmacm/PassiveRTT)</a>", October 2017.</td>
+</tr>
+<tr>
+<td class="reference"><b id="PAM-RTT-PRIVACY">[PAM-RTT-PRIVACY]</b></td>
+<td class="top">
+<a>Trammell, B.</a> and <a>M. Kuehlewind</a>, "<a>Revisiting the Privacy Implications of Two-Way Internet Latency Data (PAM 2018, LNCS 10771, pp. 73-84)</a>", March 2018.</td>
+</tr>
+<tr>
+<td class="reference"><b id="PATH-SIGNALS">[PATH-SIGNALS]</b></td>
+<td class="top">
+<a>Hardie, T.</a>, "<a href="https://tools.ietf.org/html/draft-iab-path-signals-00">Path Signals</a>", Internet-Draft draft-iab-path-signals-00, May 2018.</td>
+</tr>
+<tr>
+<td class="reference"><b id="QUIC-SPIN">[QUIC-SPIN]</b></td>
+<td class="top">
+<a>Trammell, B.</a>, <a>Vaere, P.</a>, <a>Even, R.</a>, <a>Fioccola, G.</a>, <a>Fossati, T.</a>, <a>Ihlar, M.</a>, <a>Morton, A.</a> and <a>S. Emile</a>, "<a href="https://tools.ietf.org/html/draft-trammell-quic-spin-03">Adding Explicit Passive Measurability of Two-Way Latency to the QUIC Transport Protocol</a>", Internet-Draft draft-trammell-quic-spin-03, May 2018.</td>
+</tr>
+<tr>
+<td class="reference"><b id="QUIC-SPIN-EXP">[QUIC-SPIN-EXP]</b></td>
+<td class="top">
+<a>Trammell, B.</a> and <a>M. Kuehlewind</a>, "<a href="https://tools.ietf.org/html/draft-ietf-quic-spin-exp-00">The QUIC Latency Spin Bit</a>", Internet-Draft draft-ietf-quic-spin-exp-00, April 2018.</td>
+</tr>
+<tr>
+<td class="reference"><b id="QUIC-TRANSPORT">[QUIC-TRANSPORT]</b></td>
+<td class="top">
+<a>Iyengar, J.</a> and <a>M. Thomson</a>, "<a href="https://tools.ietf.org/html/draft-ietf-quic-transport-12">QUIC: A UDP-Based Multiplexed and Secure Transport</a>", Internet-Draft draft-ietf-quic-transport-12, May 2018.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC0791">[RFC0791]</b></td>
+<td class="top">
+<a>Postel, J.</a>, "<a href="https://tools.ietf.org/html/rfc791">Internet Protocol</a>", STD 5, RFC 791, DOI 10.17487/RFC0791, September 1981.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC0792">[RFC0792]</b></td>
+<td class="top">
+<a>Postel, J.</a>, "<a href="https://tools.ietf.org/html/rfc792">Internet Control Message Protocol</a>", STD 5, RFC 792, DOI 10.17487/RFC0792, September 1981.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC0793">[RFC0793]</b></td>
+<td class="top">
+<a>Postel, J.</a>, "<a href="https://tools.ietf.org/html/rfc793">Transmission Control Protocol</a>", STD 7, RFC 793, DOI 10.17487/RFC0793, September 1981.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC4443">[RFC4443]</b></td>
+<td class="top">
+<a>Conta, A.</a>, <a>Deering, S.</a> and <a>M. Gupta</a>, "<a href="https://tools.ietf.org/html/rfc4443">Internet Control Message Protocol (ICMPv6) for the Internet Protocol Version 6 (IPv6) Specification</a>", STD 89, RFC 4443, DOI 10.17487/RFC4443, March 2006.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC7373">[RFC7373]</b></td>
+<td class="top">
+<a>Trammell, B.</a>, "<a href="https://tools.ietf.org/html/rfc7373">Textual Representation of IP Flow Information Export (IPFIX) Abstract Data Types</a>", RFC 7373, DOI 10.17487/RFC7373, September 2014.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC7799">[RFC7799]</b></td>
+<td class="top">
+<a>Morton, A.</a>, "<a href="https://tools.ietf.org/html/rfc7799">Active and Passive Metrics and Methods (with Hybrid Types In-Between)</a>", RFC 7799, DOI 10.17487/RFC7799, May 2016.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC7872">[RFC7872]</b></td>
+<td class="top">
+<a>Gont, F.</a>, <a>Linkova, J.</a>, <a>Chown, T.</a> and <a>W. Liu</a>, "<a href="https://tools.ietf.org/html/rfc7872">Observations on the Dropping of Packets with IPv6 Extension Headers in the Real World</a>", RFC 7872, DOI 10.17487/RFC7872, June 2016.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC8200">[RFC8200]</b></td>
+<td class="top">
+<a>Deering, S.</a> and <a>R. Hinden</a>, "<a href="https://tools.ietf.org/html/rfc8200">Internet Protocol, Version 6 (IPv6) Specification</a>", STD 86, RFC 8200, DOI 10.17487/RFC8200, July 2017.</td>
+</tr>
+<tr>
+<td class="reference"><b id="SHBAIR">[SHBAIR]</b></td>
+<td class="top">
+<a>Shbair, W.</a>, <a>Cholez, T.</a>, <a>Francois, J.</a> and <a>I. Chrisment</a>, "<a>A multi-level framework to identify HTTPS services (in Proc. IEEE/IFIP NOMS)</a>", April 2016.</td>
+</tr>
+<tr>
+<td class="reference"><b id="SPINBIT-REPORT">[SPINBIT-REPORT]</b></td>
+<td class="top">
+<a>De Vaere, P.</a>, "<a>Latency Spinbit Implementation Experience (https://devae.re/f/eth/quic/spinbit_report/)</a>", November 2017.</td>
+</tr>
+<tr>
+<td class="reference"><b id="TMA-QOF">[TMA-QOF]</b></td>
+<td class="top">
+<a>Trammell, B.</a>, <a>Gugelmann, D.</a> and <a>N. Brownlee</a>, "<a>Inline Data Integrity Signals for Passive Measurement (in Proc. TMA 2014)</a>", April 2014.</td>
+</tr>
+<tr>
+<td class="reference"><b id="TOKYO-PING">[TOKYO-PING]</b></td>
+<td class="top">
+<a>Pelsser, C.</a>, <a>Cittadini, L.</a>, <a>Vissicchio, S.</a> and <a>R. Bush</a>, "<a>From Paris to Tokyo - On the Suitability of ping to Measure Latency (ACM IMC 2014)</a>", October 2014.</td>
+</tr>
+<tr>
+<td class="reference"><b id="WIRE-IMAGE">[WIRE-IMAGE]</b></td>
+<td class="top">
+<a>Trammell, B.</a> and <a>M. Kuehlewind</a>, "<a href="https://tools.ietf.org/html/draft-trammell-wire-image-04">The Wire Image of a Network Protocol</a>", Internet-Draft draft-trammell-wire-image-04, April 2018.</td>
+</tr>
+<tr>
+<td class="reference"><b id="WWMM-BLOAT">[WWMM-BLOAT]</b></td>
+<td class="top">
+<a>Alfredsson, S.</a>, <a>Giudice, G.</a>, <a>Garcia, J.</a>, <a>Brunstrom, A.</a>, <a>Cicco, L.</a> and <a>S. Mascolo</a>, "<a>Impact of TCP Congestion Control on Bufferbloat in Cellular Networks (in Proc. IEEE WoWMoM 2013)</a>", June 2013.</td>
+</tr>
+<tr>
+<td class="reference"><b id="ZANDER-TS">[ZANDER-TS]</b></td>
+<td class="top">
+<a>Zander, S.</a> and <a>S. Murdoch</a>, "<a>An Improved Clock-skew Measurement Technique for Revealing Hidden Services (USENIX Security 2008, pp. 211-225)</a>", 2008.</td>
+</tr>
+</tbody></table>
+<h1 id="rfc.authors"><a href="#rfc.authors">Author's Address</a></h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Brian Trammell</span> (editor)
+	  <span class="n hidden">
+		<span class="family-name">Trammell</span>
+	  </span>
+	</span>
+	<span class="org vcardline">ETH Zurich</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:ietf@trammell.ch">ietf@trammell.ch</a></span>
+
+  </address>
+</div>
+
+</body>
+</html>
