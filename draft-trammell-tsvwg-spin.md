@@ -40,18 +40,6 @@ informative:
       -
         ins: B. Trammell
     date: 2017-04-01
-  TOKYO-PING:
-    title: From Paris to Tokyo - On the Suitability of ping to Measure Latency (ACM IMC 2014)
-    author:
-      -
-        ins: C. Pelsser
-      -
-        ins: L. Cittadini
-      -
-        ins: S. Vissicchio
-      -
-        ins: R. Bush
-    date: 2014-10-23
   CARRA-RTT:
     title: Passive Online RTT Estimation for Flow-Aware Routers Using One-Way Traffic (NETWORKING 2010, LNCS 6091, pp. 109–121)
     author:
@@ -76,79 +64,12 @@ informative:
       -
         ins: S. J. Murdoch
     date: 2008
-  CONUS:
-    title: Comparison of Backbone Node RTT and Great Circle Distances (https://github.com/acmacm/CONUS-RTT)
-    author:
-      -
-        ins: A. Morton
-    date: 2017-09-01
-  NOSPIN:
-    title: Description of a tool chain to evaluate Unidirectional Passive RTT measurement (and results) (https://github.com/acmacm/PassiveRTT)
-    author:
-      -
-        ins: A. Morton
-    date: 2017-10-05
-  SPINBIT-REPORT:
-    title: Latency Spinbit Implementation Experience (https://devae.re/f/eth/quic/spinbit_report/)
-    author:
-      -
-        ins: P. De Vaere
-    date: 2017-11-28
-  MINQ:
-    title: MINQ, a simple Go implementation of QUIC (https://github.com/ekr/minq)
-    author:
-      -
-        ins: E. Rescorla
-    date: 2017-11-28
-  MOKUMOKUREN:
-    title: Mokumokuren, a lightweight flow meter using gopacket (https://github.com/britram/mokumokuren)
-    author:
-      -
-        ins: B. Trammell
-    date: 2017-11-12
-  IMC-CONGESTION:
-    title: Challenges in Inferring Internet Interdomain Congestion (in Proc. ACM IMC 2014)
-    author:
-      -
-        ins: M. Luckie
-      -
-        ins: A. Dhamdhere
-      -
-        ins: D. Clark
-      -
-        ins: B. Huffaker
-      -
-        ins: k. claffy
-    date: 2014-11
-  IMC-TCPSIG:
-    title: TCP Congestion Signatures (in Proc. ACM IMC 2017)
-    author:
-      -
-        ins: S. Sundaresan
-      -
-        ins: A. Dhamdhere
-      -
-        ins: M. Allman
-      -
-        ins: k claffy
   CACM-TCP:
     title: Passively Measuring TCP Round-Trip Times (in Communications of the ACM)
     author:
       -
         ins: S. Strowes
     date: 2013-10
-  SHBAIR:
-    title: A multi-level framework to identify HTTPS services (in Proc. IEEE/IFIP NOMS)
-    author:
-      -
-        ins: W. M. Shbair
-      -
-        ins: T. Cholez
-      -
-        ins: J. Francois
-      -
-        ins: I. Chrisment
-    date: 2016-04
   TMA-QOF:
     title: Inline Data Integrity Signals for Passive Measurement (in Proc. TMA 2014)
     author:
@@ -159,22 +80,7 @@ informative:
       -
         ins: N. Brownlee
     date: 2014-04
-  WWMM-BLOAT:
-    title: Impact of TCP Congestion Control on Bufferbloat in Cellular Networks (in Proc. IEEE WoWMoM 2013)
-    author:
-      -
-        ins: S. Alfredsson
-      -
-        ins: G. Giudice
-      -
-        ins: J. Garcia
-      -
-        ins: A. Brunstrom
-      -
-        ins: L. Cicco
-      -
-        ins: S. Mascolo
-    date: 2013-06
+
 
 --- abstract
 
