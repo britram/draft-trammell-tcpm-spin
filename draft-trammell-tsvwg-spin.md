@@ -27,7 +27,7 @@ informative:
     author:
       -
         ins: B. Trammell
-      - 
+      -
         ins: M. Kuehlewind
     date: 2018-03-26
   IPIM:
@@ -262,7 +262,7 @@ On receiving a packet on a given connection, the receiver:
 
 4. stores the value of the incoming spin bit as LAST_RECV_SPIN for subsequent VEC
    generation.
-   
+
 5. stores the time at which this packet was received as RECV_TIME.
 
 On sending a packet on a given connection, the sender:
@@ -400,7 +400,7 @@ difference between these edges in the spin bit signal in a single direction to
 measure one sample of end-to-end RTT. Note that this measurement, as with
 transport-specific passive RTT measurement, includes any transport protocol
 delay (e.g., delayed sending of acknowledgements) and/or application layer
-delay (e.g., waiting for a request to complete). These RTT samples can be used 
+delay (e.g., waiting for a request to complete). These RTT samples can be used
 
 The VEC can be used by observers to determine whether an edge in the spin bit
 signal is valid or not, as follows:
@@ -419,7 +419,7 @@ signal is valid or not, as follows:
   the previous VEC 1 edge was seen.
 - A packet containing an apparent edge in the spin signal with a VEC of 3 can
   be used as a left edge or right edge, and can be used to compute component
-  RTT in either direction. 
+  RTT in either direction.
 
 Taking only valid samples ensures that the RTT estimate provided is accurate.
 However, in some situations, it may result in a low sample rate. Since the VEC
@@ -434,12 +434,12 @@ increase the sample rate in challenging network or traffic environments.
 
 The following subsections define how to bind the spin bit to various IETF
 transport protocols. As of this writing, bindings are specified for QUIC and
-TCP. 
+TCP.
 
 ## QUIC
 
 This signal was originally specified for the QUIC transport protocol
-{{QUIC-TRANS}}, as the encrypted design of that protocol makes passive RTT
+{{QUIC-TRANSPORT}}, as the encrypted design of that protocol makes passive RTT
 measurement impossible. The binding of this signal to QUIC is partially
 described in {{?QUIC-SPIN-EXP=I-D.ietf-quic-spin-exp}}, which adds the spin
 bit only (without the VEC) to QUIC for experimentation purposes.
@@ -447,7 +447,7 @@ bit only (without the VEC) to QUIC for experimentation purposes.
 The full signal can be added to QUIC by adding the VEC mechanism to the spin
 bit mechanism already defined in {{QUIC-SPIN-EXP}}, encoding the VEC into QUIC
 short packet headers using the three bits reserved for that purpose, as shown
-in {{quic-hdr}}. 
+in {{quic-hdr}}.
 
 ~~~~~
 
@@ -496,7 +496,7 @@ acknowledgment numbers: only packets which have a sequence number greater than
 highest sequence number seen, accounting for wraparound, or which have a
 sequence number equal to the last sequence number seen and an acknowledgment
 number higher than the highest acknowledgment number seen, accounting for
-wraparound, are considered when generating the signal. 
+wraparound, are considered when generating the signal.
 
 Since use of the reserved bits may cause connectivity issues in situations
 where overzealous interpretation by devices on path of "must be zero" for the
@@ -535,7 +535,7 @@ per-connection signal, it is best carried at the transport layer.
 In any case, adding this signal to network layer protocols is unlikely to
 prove deployable. IPv6 hop-by-hop and destination options {{?RFC8200}} do not
 work on a significant minority of measured network paths {{?RFC7872}}, and
-IPv4 {{?RFC0791}} options are even less usable. 
+IPv4 {{?RFC0791}} options are even less usable.
 
 # Privacy and Security Considerations {#privsec}
 
@@ -551,7 +551,7 @@ low-quality, freely-available IP address geolocation. In the event that the
 true endpoint address is not known (for example, in the case of anonymity
 networks), latency information could be used for deanonymization. However, in
 this case, the signal will not carry end-to-end RTT, rather exit-to-public-end
-RTT, as these networks typically terminate transport-layer connections. 
+RTT, as these networks typically terminate transport-layer connections.
 
 RTT information may be used to infer the occupancy of queues along a path;
 indeed, this is part of its utility for performance measurement and
@@ -590,7 +590,7 @@ the hybrid RTT measurement signal. In the case of TCP, mitigation is trivial
 as existing passive measurement methods can be used to verify the operation of
 the signal. The case of QUIC is harder, as in the general case it is
 impossible to verify explicit path signals with two complicit endpoints
-connected via an encrypted channel (see {{WIRE-IMAGE}}). However, here there
+connected via an encrypted channel (see {{?WIRE-IMAGE=I-D.trammell-wire-image}}). However, here there
 are also verification methods possible. A lying server could be contacted by
 an honest client under the control of a verifying party, and the client's RTT
 estimate compared with the spin-bit exposed estimate. A server/client pair
@@ -618,7 +618,7 @@ Fioccola, Thomas Fossati, Marcus Ihlar, Al Morton, and Emile Stephan.
 # Acknowledgments
 
 Many thanks to Christian Huitema, who originally proposed the spin bit as pull
-request 609 on {{QUIC-TRANS}}. Thanks to Tobias Buehler for feedback on the
+request 609 on {{QUIC-TRANSPORT}}. Thanks to Tobias Buehler for feedback on the
 draft, and for Alexandre Ferrieux for input on the Valid Edge Counter. Special
 thanks to the QUIC RTT Design Team for discussions leading especially to the
 privacy and security considerations section.
