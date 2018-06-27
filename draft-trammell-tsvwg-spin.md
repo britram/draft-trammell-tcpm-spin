@@ -81,7 +81,6 @@ informative:
         ins: N. Brownlee
     date: 2014-04
 
-
 --- abstract
 
 This document defines an explicit per-flow transport-layer signal for hybrid
