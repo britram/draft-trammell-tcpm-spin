@@ -414,9 +414,11 @@ disables generation of the signal for the life of the connection.
 
 This signal is the result of work carried out in various BoFs and working
 groups in the IETF. This section attempts to answer questions that have been
-posed in those contexts about approaches such as that outlined in this document.
+posed in those contexts about approaches such as that outlined in this
+document.
 
-Additional discussion of privacy and security relevant questions is given in {{privsec}}
+Additional discussion of privacy and security relevant questions is given in
+{{privsec}}
 
 ## Why the transport layer?
 
@@ -427,15 +429,14 @@ both "not really" and "it doesn't matter".
 
 The signal defined in this document is designed to measure per-connection,
 end-to-end RTT. The per-connection nature of the signal leverages the
-assumption that all packets of a given connection will be routed over the same
-path over a given time interval (on the scale of multiple RTTs) to ensure
-observability at all points along the path
-
-While this metric contains both network and endpoint delay
-components, its applicability is greater than one which measures network
-components alone (as ICMP Echo {{?RFC0792}} {{?RFC4443}} is designed to do),
-as it better tracks user-experienced performance. As it is necessarily a
-per-connection signal, it is best carried at the transport layer.
+assumption that all packets of a given connection (n-tuple flow, including
+transport layer ports) will be routed over the same path over a given time
+interval (on the scale of multiple RTTs) to ensure observability at all points
+along the path. As it is necessarily a per-connection signal, it is best
+carried at the transport layer. In addition, the need to reject retransmitted
+or duplicated packets in the generated signal implies the need for sequence or
+packet numbering, which is also inherently per-connection, and therefore a
+transport-layer function.
 
 In any case, adding this signal to network layer protocols is unlikely to
 prove deployable. IPv6 hop-by-hop and destination options {{?RFC8200}} do not
