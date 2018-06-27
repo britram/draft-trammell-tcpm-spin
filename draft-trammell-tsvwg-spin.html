@@ -562,9 +562,8 @@ points               X    Y
 <a href="#rfc.section.5.1">5.1.</a> <a href="#why-the-transport-layer" id="why-the-transport-layer">Why the transport layer?</a>
 </h1>
 <p id="rfc.section.5.1.p.1">As this path signal is (by definition) designed for consumption by devices on the path, and the transport layer is designed for end-to-end operation, an obvious question presents itself: isn&#8217;t this a layer violation? The answer is both &#8220;not really&#8221; and &#8220;it doesn&#8217;t matter&#8221;.</p>
-<p id="rfc.section.5.1.p.2">The signal defined in this document is designed to measure per-connection, end-to-end RTT. The per-connection nature of the signal leverages the assumption that all packets of a given connection will be routed over the same path over a given time interval (on the scale of multiple RTTs) to ensure observability at all points along the path</p>
-<p id="rfc.section.5.1.p.3">While this metric contains both network and endpoint delay components, its applicability is greater than one which measures network components alone (as ICMP Echo <a href="#RFC0792" class="xref">[RFC0792]</a> <a href="#RFC4443" class="xref">[RFC4443]</a> is designed to do), as it better tracks user-experienced performance. As it is necessarily a per-connection signal, it is best carried at the transport layer.</p>
-<p id="rfc.section.5.1.p.4">In any case, adding this signal to network layer protocols is unlikely to prove deployable. IPv6 hop-by-hop and destination options <a href="#RFC8200" class="xref">[RFC8200]</a> do not work on a significant minority of measured network paths <a href="#RFC7872" class="xref">[RFC7872]</a>, and IPv4 <a href="#RFC0791" class="xref">[RFC0791]</a> options are even less usable.</p>
+<p id="rfc.section.5.1.p.2">The signal defined in this document is designed to measure per-connection, end-to-end RTT. The per-connection nature of the signal leverages the assumption that all packets of a given connection (n-tuple flow, including transport layer ports) will be routed over the same path over a given time interval (on the scale of multiple RTTs) to ensure observability at all points along the path. As it is necessarily a per-connection signal, it is best carried at the transport layer. In addition, the need to reject retransmitted or duplicated packets in the generated signal implies the need for sequence or packet numbering, which is also inherently per-connection, and therefore a transport-layer function.</p>
+<p id="rfc.section.5.1.p.3">In any case, adding this signal to network layer protocols is unlikely to prove deployable. IPv6 hop-by-hop and destination options <a href="#RFC8200" class="xref">[RFC8200]</a> do not work on a significant minority of measured network paths <a href="#RFC7872" class="xref">[RFC7872]</a>, and IPv4 <a href="#RFC0791" class="xref">[RFC0791]</a> options are even less usable.</p>
 <h1 id="rfc.section.6">
 <a href="#rfc.section.6">6.</a> <a href="#privsec" id="privsec">Privacy and Security Considerations</a>
 </h1>
@@ -644,19 +643,9 @@ points               X    Y
 <a>Postel, J.</a>, "<a href="https://tools.ietf.org/html/rfc791">Internet Protocol</a>", STD 5, RFC 791, DOI 10.17487/RFC0791, September 1981.</td>
 </tr>
 <tr>
-<td class="reference"><b id="RFC0792">[RFC0792]</b></td>
-<td class="top">
-<a>Postel, J.</a>, "<a href="https://tools.ietf.org/html/rfc792">Internet Control Message Protocol</a>", STD 5, RFC 792, DOI 10.17487/RFC0792, September 1981.</td>
-</tr>
-<tr>
 <td class="reference"><b id="RFC0793">[RFC0793]</b></td>
 <td class="top">
 <a>Postel, J.</a>, "<a href="https://tools.ietf.org/html/rfc793">Transmission Control Protocol</a>", STD 7, RFC 793, DOI 10.17487/RFC0793, September 1981.</td>
-</tr>
-<tr>
-<td class="reference"><b id="RFC4443">[RFC4443]</b></td>
-<td class="top">
-<a>Conta, A.</a>, <a>Deering, S.</a> and <a>M. Gupta</a>, "<a href="https://tools.ietf.org/html/rfc4443">Internet Control Message Protocol (ICMPv6) for the Internet Protocol Version 6 (IPv6) Specification</a>", STD 89, RFC 4443, DOI 10.17487/RFC4443, March 2006.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC7373">[RFC7373]</b></td>
