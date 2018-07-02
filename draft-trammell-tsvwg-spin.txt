@@ -4,8 +4,8 @@
 
 TSVWG                                                   B. Trammell, Ed.
 Internet-Draft                                                ETH Zurich
-Intended status: Experimental                              June 27, 2018
-Expires: December 29, 2018
+Intended status: Experimental                              July 02, 2018
+Expires: January 3, 2019
 
 
    A Transport-Independent Explicit Signal for Hybrid RTT Measurement
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 29, 2018.
+   This Internet-Draft will expire on January 3, 2019.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Trammell                Expires December 29, 2018               [Page 1]
+Trammell                 Expires January 3, 2019                [Page 1]
 
-Internet-Draft                  Spin Bits                      June 2018
+Internet-Draft                  Spin Bits                      July 2018
 
 
    to this document.  Code Components extracted from this document must
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Trammell                Expires December 29, 2018               [Page 2]
+Trammell                 Expires January 3, 2019                [Page 2]
 
-Internet-Draft                  Spin Bits                      June 2018
+Internet-Draft                  Spin Bits                      July 2018
 
 
    provides a relatively large amount of information for sender
@@ -165,9 +165,9 @@ Internet-Draft                  Spin Bits                      June 2018
 
 
 
-Trammell                Expires December 29, 2018               [Page 3]
+Trammell                 Expires January 3, 2019                [Page 3]
 
-Internet-Draft                  Spin Bits                      June 2018
+Internet-Draft                  Spin Bits                      July 2018
 
 
    3.  updates its NEXT_VEC value for the connection as follows.  If the
@@ -221,9 +221,9 @@ Internet-Draft                  Spin Bits                      June 2018
 
 
 
-Trammell                Expires December 29, 2018               [Page 4]
+Trammell                 Expires January 3, 2019                [Page 4]
 
-Internet-Draft                  Spin Bits                      June 2018
+Internet-Draft                  Spin Bits                      July 2018
 
 
    +--------+   --  --  --  --  --   +--------+
@@ -277,9 +277,9 @@ Internet-Draft                  Spin Bits                      June 2018
 
 
 
-Trammell                Expires December 29, 2018               [Page 5]
+Trammell                 Expires January 3, 2019                [Page 5]
 
-Internet-Draft                  Spin Bits                      June 2018
+Internet-Draft                  Spin Bits                      July 2018
 
 
    observation
@@ -333,9 +333,9 @@ Internet-Draft                  Spin Bits                      June 2018
 
 
 
-Trammell                Expires December 29, 2018               [Page 6]
+Trammell                 Expires January 3, 2019                [Page 6]
 
-Internet-Draft                  Spin Bits                      June 2018
+Internet-Draft                  Spin Bits                      July 2018
 
 
    RTT, and the VEC counts up to 3 and holds on the edges in the spin
@@ -389,9 +389,9 @@ Internet-Draft                  Spin Bits                      June 2018
 
 
 
-Trammell                Expires December 29, 2018               [Page 7]
+Trammell                 Expires January 3, 2019                [Page 7]
 
-Internet-Draft                  Spin Bits                      June 2018
+Internet-Draft                  Spin Bits                      July 2018
 
 
 4.  Binding the Hybrid RTT Measurement Signal to Transport Protocols
@@ -445,9 +445,9 @@ Internet-Draft                  Spin Bits                      June 2018
 
 
 
-Trammell                Expires December 29, 2018               [Page 8]
+Trammell                 Expires January 3, 2019                [Page 8]
 
-Internet-Draft                  Spin Bits                      June 2018
+Internet-Draft                  Spin Bits                      July 2018
 
 
 4.2.  TCP
@@ -490,7 +490,7 @@ Internet-Draft                  Spin Bits                      June 2018
    such as that outlined in this document.
 
    Additional discussion of privacy and security relevant questions is
-   given in Section 6
+   given in Section 6.
 
 5.1.  Why the transport layer?
 
@@ -501,9 +501,9 @@ Internet-Draft                  Spin Bits                      June 2018
 
 
 
-Trammell                Expires December 29, 2018               [Page 9]
+Trammell                 Expires January 3, 2019                [Page 9]
 
-Internet-Draft                  Spin Bits                      June 2018
+Internet-Draft                  Spin Bits                      July 2018
 
 
    layer violation?  The answer is both "not really" and "it doesn't
@@ -557,9 +557,9 @@ Internet-Draft                  Spin Bits                      June 2018
 
 
 
-Trammell                Expires December 29, 2018              [Page 10]
+Trammell                 Expires January 3, 2019               [Page 10]
 
-Internet-Draft                  Spin Bits                      June 2018
+Internet-Draft                  Spin Bits                      July 2018
 
 
    observer in a situation to observe RTT passively need not infer the
@@ -607,15 +607,15 @@ Internet-Draft                  Spin Bits                      June 2018
 
 7.  IANA Considerations
 
-   This document requests the following assignments in the TCP Header
-   Flags registry:
+   This document, if published as an RFC, would request the following
+   assignments in the TCP Header Flags registry for the purposes of this
+   experiment:
 
 
 
-
-Trammell                Expires December 29, 2018              [Page 11]
+Trammell                 Expires January 3, 2019               [Page 11]
 
-Internet-Draft                  Spin Bits                      June 2018
+Internet-Draft                  Spin Bits                      July 2018
 
 
    o  Bit 4: Hybrid RTT Measurement Spin Bit, as defined in this
@@ -669,9 +669,9 @@ Internet-Draft                  Spin Bits                      June 2018
 
 
 
-Trammell                Expires December 29, 2018              [Page 12]
+Trammell                 Expires January 3, 2019               [Page 12]
 
-Internet-Draft                  Spin Bits                      June 2018
+Internet-Draft                  Spin Bits                      July 2018
 
 
    [PAM-RTT-PRIVACY]
@@ -697,8 +697,8 @@ Internet-Draft                  Spin Bits                      June 2018
 
    [QUIC-TRANSPORT]
               Iyengar, J. and M. Thomson, "QUIC: A UDP-Based Multiplexed
-              and Secure Transport", draft-ietf-quic-transport-12 (work
-              in progress), May 2018.
+              and Secure Transport", draft-ietf-quic-transport-13 (work
+              in progress), June 2018.
 
    [RFC0791]  Postel, J., "Internet Protocol", STD 5, RFC 791,
               DOI 10.17487/RFC0791, September 1981,
@@ -725,9 +725,9 @@ Internet-Draft                  Spin Bits                      June 2018
 
 
 
-Trammell                Expires December 29, 2018              [Page 13]
+Trammell                 Expires January 3, 2019               [Page 13]
 
-Internet-Draft                  Spin Bits                      June 2018
+Internet-Draft                  Spin Bits                      July 2018
 
 
    [RFC8200]  Deering, S. and R. Hinden, "Internet Protocol, Version 6
@@ -781,4 +781,4 @@ Author's Address
 
 
 
-Trammell                Expires December 29, 2018              [Page 14]
+Trammell                 Expires January 3, 2019               [Page 14]
