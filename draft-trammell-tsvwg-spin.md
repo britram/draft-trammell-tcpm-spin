@@ -418,7 +418,7 @@ posed in those contexts about approaches such as that outlined in this
 document.
 
 Additional discussion of privacy and security relevant questions is given in
-{{privsec}}
+{{privsec}}.
 
 ## Why the transport layer?
 
@@ -496,19 +496,21 @@ the hybrid RTT measurement signal. In the case of TCP, mitigation is trivial
 as existing passive measurement methods can be used to verify the operation of
 the signal. The case of QUIC is harder, as in the general case it is
 impossible to verify explicit path signals with two complicit endpoints
-connected via an encrypted channel (see {{?WIRE-IMAGE=I-D.trammell-wire-image}}). However, here there
-are also verification methods possible. A lying server could be contacted by
-an honest client under the control of a verifying party, and the client's RTT
-estimate compared with the spin-bit exposed estimate. A server/client pair
-that collaborate to lie may be subject to dynamic analysis along paths with
-known RTTs. We consider the ease of verification of lying in situations where
-this would be prohibited by regulation or contract, combined with the
-consequences of violation of said regulation or contract, to be a sufficient
-incentive in the general case not to do it.
+connected via an encrypted channel (see
+{{?WIRE-IMAGE=I-D.trammell-wire-image}}). However, here there are also
+verification methods possible. A lying server could be contacted by an honest
+client under the control of a verifying party, and the client's RTT estimate
+compared with the spin-bit exposed estimate. A server/client pair that
+collaborate to lie may be subject to dynamic analysis along paths with known
+RTTs. We consider the ease of verification of lying in situations where this
+would be prohibited by regulation or contract, combined with the consequences
+of violation of said regulation or contract, to be a sufficient incentive in
+the general case not to do it.
 
 # IANA Considerations
 
-This document requests the following assignments in the TCP Header Flags registry:
+This document, if published as an RFC, would request the following assignments
+in the TCP Header Flags registry for the purposes of this experiment:
 
 - Bit 4: Hybrid RTT Measurement Spin Bit, as defined in this document
 - Bit 5: Hybrid RTT Measurement Valid Edge Counter, high-order bit, as defined in this document
