@@ -175,9 +175,9 @@ informative:
 
 --- abstract
 
-This document describes the utility of passive latency measurement, both for
-the generation of latency metrics, as well as for other measurement tasks,
-when passive latency measurement is the only facility available for
+This document describes the utility of passive two-way latency measurement,
+both for the generation of latency metrics, as well as for other measurement
+tasks, when passive latency measurement is the only facility available for
 measurement. It additionally discusses other metrics derivable from the
 transport-independent latency spin signal defined in
 {{!TSVWG-SPIN=I-D.trammell-tsvwg-spin}}.
@@ -186,8 +186,22 @@ transport-independent latency spin signal defined in
 
 # Introduction
 
-\[frontmatter goes here]
+Latency is a key metric to understanding network operation and performance.
+Passive measurement allows inspection of latency on productive traffic,
+avoiding problems with different treatment of productive and measurement
+traffic, and enables opportunistic measurement of latency without active
+measurement overhead.
 
+Passive measurement of RTT, in particular, has both direct utility (see
+{{use-cases}}), generating RTT samples for the measurement of RTT for various
+use cases, as well as indirect utility (see {{wireshark}}), since RTT is
+correlated with other useful metrics. In addition, the passive latency signal
+proposed in {{TSVWG-SPIN}} provides other opportunities for metric generation
+which are a consequence of its design.
+
+This document describes these use cases in order to motivate why passive
+measurability of RTT on a per-flow basis is an interesting and useful feature
+for a transport protocol to have.
 
 ## About This Document
 
@@ -321,8 +335,6 @@ In addition to the direct generation of RTT metric samples, RTT measurement
 can also be used for indirect generation of other metrics when more direct
 means are not available.
 
-## Intraflow performance troubleshooting
-
 A variety of tools are used for detailed troubleshooting of the performance of
 single flows, both for debugging transport- and application-layer protocol
 implementations, as well as to determine whether a particular end-to-end
@@ -353,7 +365,6 @@ server behavior, can go a long way toward replacing direct visibility of
 transport protocol dynamics (sequence and acknowledgment number seqence over
 time) for encrypted transports; the exact details of this are a subject of
 present and future research.
-
 
 # Additional Metrics Derivable from the Spin Bit {#more-spin}
 
