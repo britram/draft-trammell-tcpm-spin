@@ -394,7 +394,7 @@ ul.toc li {
 </h1>
 <p id="rfc.section.1.p.1">Latency is a key metric to understanding network operation and performance.  Passive measurement allows inspection of latency on productive traffic, avoiding problems with different treatment of productive and measurement traffic, and enables opportunistic measurement of latency without active measurement overhead.</p>
 <p id="rfc.section.1.p.2">Passive measurement of RTT, in particular, has both direct utility (see <a href="#use-cases" class="xref">Section 2</a>), generating RTT samples for the measurement of RTT for various use cases, as well as indirect utility (see <a href="#wireshark" class="xref">Section 3</a>), since RTT is correlated with other useful metrics. In addition, the passive latency signal proposed in <a href="#TSVWG-SPIN" class="xref">[TSVWG-SPIN]</a> provides other opportunities for metric generation which are a consequence of its design.</p>
-<p id="rfc.section.1.p.3">This document describes these use cases in order to motivate why passive measurability of RTT on a per-flow basis is an interesting and useful feature for a transport protocol to have.</p>
+<p id="rfc.section.1.p.3">This document describes these use cases in order to motivate why passive measurability of RTT on a per-flow basis is an interesting and useful feature for a transport protocol to have. In the absence of other directly observable metrics such as loss and retransmission, as is the case with protocols with mostly-encrypted wire images <a href="#WIRE-IMAGE" class="xref">[WIRE-IMAGE]</a> such as QUIC <a href="#QUIC" class="xref">[QUIC]</a>.</p>
 <h1 id="rfc.section.1.1">
 <a href="#rfc.section.1.1">1.1.</a> <a href="#about-this-document" id="about-this-document">About This Document</a>
 </h1>
@@ -549,6 +549,11 @@ ul.toc li {
 <a>Morton, A.</a>, "<a>Description of a tool chain to evaluate Unidirectional Passive RTT measurement (and results) (https://github.com/acmacm/PassiveRTT)</a>", October 2017.</td>
 </tr>
 <tr>
+<td class="reference"><b id="QUIC">[QUIC]</b></td>
+<td class="top">
+<a>Iyengar, J.</a> and <a>M. Thomson</a>, "<a href="https://tools.ietf.org/html/draft-ietf-quic-transport-14">QUIC: A UDP-Based Multiplexed and Secure Transport</a>", Internet-Draft draft-ietf-quic-transport-14, August 2018.</td>
+</tr>
+<tr>
 <td class="reference"><b id="RFC6049">[RFC6049]</b></td>
 <td class="top">
 <a>Morton, A.</a> and <a>E. Stephan</a>, "<a href="https://tools.ietf.org/html/rfc6049">Spatial Composition of Metrics</a>", RFC 6049, DOI 10.17487/RFC6049, January 2011.</td>
@@ -592,6 +597,11 @@ ul.toc li {
 <td class="reference"><b id="TRILAT">[TRILAT]</b></td>
 <td class="top">
 <a>Trammell, B.</a>, "<a>On the Suitability of RTT Measurements for Geolocation (https://github.com/britram/trilateration/blob/paper-rev-1/paper.ipynb)</a>", August 2017.</td>
+</tr>
+<tr>
+<td class="reference"><b id="WIRE-IMAGE">[WIRE-IMAGE]</b></td>
+<td class="top">
+<a>Trammell, B.</a> and <a>M. Kuehlewind</a>, "<a href="https://tools.ietf.org/html/draft-trammell-wire-image-04">The Wire Image of a Network Protocol</a>", Internet-Draft draft-trammell-wire-image-04, April 2018.</td>
 </tr>
 <tr>
 <td class="reference"><b id="WWMM-BLOAT">[WWMM-BLOAT]</b></td>

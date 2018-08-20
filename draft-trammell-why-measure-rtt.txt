@@ -64,11 +64,11 @@ Internet-Draft              Why measure RTT?                 August 2018
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
-     1.1.  About This Document . . . . . . . . . . . . . . . . . . .   2
+     1.1.  About This Document . . . . . . . . . . . . . . . . . . .   3
    2.  Direct Utility of Passive RTT Measurement . . . . . . . . . .   3
      2.1.  Inter-domain Troubleshooting  . . . . . . . . . . . . . .   3
      2.2.  Bufferbloat Mitigation in Cellular Networks . . . . . . .   4
-     2.3.  Locating WiFi Problems in Home Networks . . . . . . . . .   4
+     2.3.  Locating WiFi Problems in Home Networks . . . . . . . . .   5
      2.4.  Internet Measurement Research . . . . . . . . . . . . . .   5
    3.  Indirect Utility of RTT Measurements  . . . . . . . . . . . .   5
    4.  Additional Metrics Derivable from the Spin Bit  . . . . . . .   6
@@ -99,13 +99,13 @@ Table of Contents
 
    This document describes these use cases in order to motivate why
    passive measurability of RTT on a per-flow basis is an interesting
-   and useful feature for a transport protocol to have.
+   and useful feature for a transport protocol to have.  In the absence
+   of other directly observable metrics such as loss and retransmission,
+   as is the case with protocols with mostly-encrypted wire images
+   [WIRE-IMAGE] such as QUIC [QUIC].
 
-1.1.  About This Document
 
-   This document is maintained in the GitHub repository
-   https://github.com/britram/draft-trammell-tsvwg-spin, and the
-   editor's copy is available online at https://britram.github.io/draft-
+
 
 
 
@@ -114,6 +114,11 @@ Trammell                Expires February 21, 2019               [Page 2]
 Internet-Draft              Why measure RTT?                 August 2018
 
 
+1.1.  About This Document
+
+   This document is maintained in the GitHub repository
+   https://github.com/britram/draft-trammell-tsvwg-spin, and the
+   editor's copy is available online at https://britram.github.io/draft-
    trammell-tsvwg-spin.  Current open issues on the document can be seen
    at https://github.com/britram/draft-trammell-tsvwg-spin/issues.
    Comments and suggestions on this document can be made by filing an
@@ -156,12 +161,7 @@ Internet-Draft              Why measure RTT?                 August 2018
    Points on path can extract spatial delay metric samples [RFC6049]
    from fields of the transport layer (e.g.  TCP) or application layer
    (e.g.  RTP).  The information is captured in the upper layer because
-   neither the IP header nor the UDP layer includes fields allowing the
-   measurement of upstream and downstream delay.
 
-   Local network performance problems are detected with monitoring tools
-   which observe the variation of upstream latency and downstream
-   latency.
 
 
 
@@ -169,6 +169,13 @@ Trammell                Expires February 21, 2019               [Page 3]
 
 Internet-Draft              Why measure RTT?                 August 2018
 
+
+   neither the IP header nor the UDP layer includes fields allowing the
+   measurement of upstream and downstream delay.
+
+   Local network performance problems are detected with monitoring tools
+   which observe the variation of upstream latency and downstream
+   latency.
 
    Inter-domain troubleshooting relies on the same metrics but is not a
    proactive task; instead, it is a recursive process which hones in on
@@ -207,15 +214,8 @@ Internet-Draft              Why measure RTT?                 August 2018
    a function also has the possibility to detect misbehaving flows and
    reduce the negative impact they have on the network.
 
-2.3.  Locating WiFi Problems in Home Networks
 
-   Many residential networks use WiFi (802.11) on the last segment, and
-   WiFi signal strength degradation manifests in high first-hop delay,
-   due to the fact that the MAC layer will retransmit packets lost at
-   that layer.  Measuring the RTT between endpoints on the customer
-   network and parts of the service provider's own infrastructure (which
-   have predictable delay characteristics) can be used to isolate this
-   cause of performance problems.
+
 
 
 
@@ -225,6 +225,16 @@ Trammell                Expires February 21, 2019               [Page 4]
 
 Internet-Draft              Why measure RTT?                 August 2018
 
+
+2.3.  Locating WiFi Problems in Home Networks
+
+   Many residential networks use WiFi (802.11) on the last segment, and
+   WiFi signal strength degradation manifests in high first-hop delay,
+   due to the fact that the MAC layer will retransmit packets lost at
+   that layer.  Measuring the RTT between endpoints on the customer
+   network and parts of the service provider's own infrastructure (which
+   have predictable delay characteristics) can be used to isolate this
+   cause of performance problems.
 
    The network provider can measure the RTT at the home gateway, or at
    an upstream point if there is no access to home gateway.  A problem
@@ -265,6 +275,13 @@ Internet-Draft              Why measure RTT?                 August 2018
    measurement can also be used for indirect generation of other metrics
    when more direct means are not available.
 
+
+
+Trammell                Expires February 21, 2019               [Page 5]
+
+Internet-Draft              Why measure RTT?                 August 2018
+
+
    A variety of tools are used for detailed troubleshooting of the
    performance of single flows, both for debugging transport- and
    application-layer protocol implementations, as well as to determine
@@ -274,14 +291,6 @@ Internet-Draft              Why measure RTT?                 August 2018
    of Wireshark, https://www.wireshark.org/) shows the development over
    time of the sequence and acknowledgment numbers, including
    retransmissions, and the evolution of the inflight and receiver flow
-
-
-
-Trammell                Expires February 21, 2019               [Page 5]
-
-Internet-Draft              Why measure RTT?                 August 2018
-
-
    control windows over time.  By analyzing the relationship among loss,
    latency, and throughput, the precise cause of an observed performance
    on a given flow can be determined.
@@ -321,6 +330,14 @@ Internet-Draft              Why measure RTT?                 August 2018
    latency spin bit must use heuristics to reject samples which are
    potentially-lost, potentially-reordered, or potentially-delayed.
    When these heuristics are instrumented to note their sample rejection
+
+
+
+Trammell                Expires February 21, 2019               [Page 6]
+
+Internet-Draft              Why measure RTT?                 August 2018
+
+
    rate, this rate itself is a potentially-useful proxy metric for
    "difficulty" (vaguely defined) experienced by a flow.
 
@@ -330,14 +347,6 @@ Internet-Draft              Why measure RTT?                 August 2018
    together with the series of spin bit values can be used to recognize
    single loss and reordering events, which can be used to generate loss
    and reordering metrics at the resolution of the flow's round trip
-
-
-
-Trammell                Expires February 21, 2019               [Page 6]
-
-Internet-Draft              Why measure RTT?                 August 2018
-
-
    time.  Optimal use of the VEC signal to generate loss and reordering
    metric signals is a subject of ongoing research.
 
@@ -377,6 +386,14 @@ Internet-Draft              Why measure RTT?                 August 2018
 
    o  Piet De Vaere, ETH Zurich
 
+
+
+
+Trammell                Expires February 21, 2019               [Page 7]
+
+Internet-Draft              Why measure RTT?                 August 2018
+
+
    o  Roni Even, Huawei
 
    o  Giuseppe Fioccola, Telecom Italia
@@ -386,13 +403,6 @@ Internet-Draft              Why measure RTT?                 August 2018
    o  Marcus Ihlar, Ericsson
 
    o  Al Morton, AT&T Labs
-
-
-
-Trammell                Expires February 21, 2019               [Page 7]
-
-Internet-Draft              Why measure RTT?                 August 2018
-
 
    o  Emile Stephan, Orange
 
@@ -433,6 +443,13 @@ Internet-Draft              Why measure RTT?                 August 2018
               Strowes, S., "Passively Measuring TCP Round-Trip Times (in
               Communications of the ACM)", October 2013.
 
+
+
+Trammell                Expires February 21, 2019               [Page 8]
+
+Internet-Draft              Why measure RTT?                 August 2018
+
+
    [CARRA-RTT]
               Carra, D., Avrachenkov, K., Alouf, S., Blanc, A., Nain,
               P., and G. Post, "Passive Online RTT Estimation for Flow-
@@ -442,13 +459,6 @@ Internet-Draft              Why measure RTT?                 August 2018
    [CONUS]    Morton, A., "Comparison of Backbone Node RTT and Great
               Circle Distances (https://github.com/acmacm/CONUS-RTT)",
               September 2017.
-
-
-
-Trammell                Expires February 21, 2019               [Page 8]
-
-Internet-Draft              Why measure RTT?                 August 2018
-
 
    [IMC-CONGESTION]
               Luckie, M., Dhamdhere, A., Clark, D., Huffaker, B., and k.
@@ -471,6 +481,10 @@ Internet-Draft              Why measure RTT?                 August 2018
               Unidirectional Passive RTT measurement (and results)
               (https://github.com/acmacm/PassiveRTT)", October 2017.
 
+   [QUIC]     Iyengar, J. and M. Thomson, "QUIC: A UDP-Based Multiplexed
+              and Secure Transport", draft-ietf-quic-transport-14 (work
+              in progress), August 2018.
+
    [RFC6049]  Morton, A. and E. Stephan, "Spatial Composition of
               Metrics", RFC 6049, DOI 10.17487/RFC6049, January 2011,
               <https://www.rfc-editor.org/info/rfc6049>.
@@ -483,6 +497,14 @@ Internet-Draft              Why measure RTT?                 August 2018
    [RFC7799]  Morton, A., "Active and Passive Metrics and Methods (with
               Hybrid Types In-Between)", RFC 7799, DOI 10.17487/RFC7799,
               May 2016, <https://www.rfc-editor.org/info/rfc7799>.
+
+
+
+
+Trammell                Expires February 21, 2019               [Page 9]
+
+Internet-Draft              Why measure RTT?                 August 2018
+
 
    [RFC8312]  Rhee, I., Xu, L., Ha, S., Zimmermann, A., Eggert, L., and
               R. Scheffenegger, "CUBIC for Fast Long-Distance Networks",
@@ -498,14 +520,6 @@ Internet-Draft              Why measure RTT?                 August 2018
               (https://devae.re/f/eth/quic/spinbit_report/)", November
               2017.
 
-
-
-
-Trammell                Expires February 21, 2019               [Page 9]
-
-Internet-Draft              Why measure RTT?                 August 2018
-
-
    [TMA-QOF]  Trammell, B., Gugelmann, D., and N. Brownlee, "Inline Data
               Integrity Signals for Passive Measurement (in Proc. TMA
               2014)", April 2014.
@@ -520,6 +534,11 @@ Internet-Draft              Why measure RTT?                 August 2018
               (https://github.com/britram/trilateration/blob/paper-rev-
               1/paper.ipynb)", August 2017.
 
+   [WIRE-IMAGE]
+              Trammell, B. and M. Kuehlewind, "The Wire Image of a
+              Network Protocol", draft-trammell-wire-image-04 (work in
+              progress), April 2018.
+
    [WWMM-BLOAT]
               Alfredsson, S., Giudice, G., Garcia, J., Brunstrom, A.,
               Cicco, L., and S. Mascolo, "Impact of TCP Congestion
@@ -532,25 +551,6 @@ Author's Address
    ETH Zurich
 
    Email: ietf@trammell.ch
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
