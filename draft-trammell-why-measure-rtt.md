@@ -19,90 +19,7 @@ author:
     org: ETH Zurich
     email: ietf@trammell.ch
 
-normative:
-  QUIC-SPIN-EXP:
-    title: "The QUIC Latency Spin Bit"
-    date: {DATE}
-    seriesinfo:
-      Internet-Draft: draft-ietf-quic-spin-exp
-    author:
-      -
-        ins: B. Trammell
-      -
-        ins: M. Kuehlewind
-
-    author:
-      -
-        ins: B. Trammell
-      -
-        ins: M. Kuehlewind
-
-
 informative:
-  TRILAT:
-    title: On the Suitability of RTT Measurements for Geolocation (https://github.com/britram/trilateration/blob/paper-rev-1/paper.ipynb)
-    author:
-      -
-        ins: B. Trammell
-    date: 2017-08-30
-  TOKYO-PING:
-    title: From Paris to Tokyo - On the Suitability of ping to Measure Latency (In Proc. ACM IMC 2014)
-    author:
-      -
-        ins: C. Pelsser
-      -
-        ins: L. Cittadini
-      -
-        ins: S. Vissicchio
-      -
-        ins: R. Bush
-    date: 2014-10-23
-  CARRA-RTT:
-    title: Passive Online RTT Estimation for Flow-Aware Routers Using One-Way Traffic (NETWORKING 2010, LNCS 6091, pp. 109–121)
-    author:
-      -
-        ins: D. Carra
-      -
-        ins: K. Avrachenkov
-      -
-        ins: S. Alouf
-      -
-        ins: A. Blanc
-      -
-        ins: P. Nain
-      -
-        ins: G. Post
-    date: 2010
-  CONUS:
-    title: Comparison of Backbone Node RTT and Great Circle Distances (https://github.com/acmacm/CONUS-RTT)
-    author:
-      -
-        ins: A. Morton
-    date: 2017-09-01
-  NOSPIN:
-    title: Description of a tool chain to evaluate Unidirectional Passive RTT measurement (and results) (https://github.com/acmacm/PassiveRTT)
-    author:
-      -
-        ins: A. Morton
-    date: 2017-10-05
-  SPINBIT-REPORT:
-    title: Latency Spinbit Implementation Experience (https://devae.re/f/eth/quic/spinbit_report/)
-    author:
-      -
-        ins: P. De Vaere
-    date: 2017-11-28
-  MINQ:
-    title: MINQ, a simple Go implementation of QUIC (https://github.com/ekr/minq)
-    author:
-      -
-        ins: E. Rescorla
-    date: 2017-11-28
-  MOKUMOKUREN:
-    title: Mokumokuren, a lightweight flow meter using gopacket (https://github.com/britram/mokumokuren)
-    author:
-      -
-        ins: B. Trammell
-    date: 2017-11-12
   IMC-CONGESTION:
     title: Challenges in Inferring Internet Interdomain Congestion (in Proc. ACM IMC 2014)
     author:
@@ -128,34 +45,6 @@ informative:
         ins: M. Allman
       -
         ins: k claffy
-  CACM-TCP:
-    title: Passively Measuring TCP Round-Trip Times (in Communications of the ACM)
-    author:
-      -
-        ins: S. Strowes
-    date: 2013-10
-  SHBAIR:
-    title: A multi-level framework to identify HTTPS services (in Proc. IEEE/IFIP NOMS)
-    author:
-      -
-        ins: W. M. Shbair
-      -
-        ins: T. Cholez
-      -
-        ins: J. Francois
-      -
-        ins: I. Chrisment
-    date: 2016-04
-  TMA-QOF:
-    title: Inline Data Integrity Signals for Passive Measurement (in Proc. TMA 2014)
-    author:
-      -
-        ins: B. Trammell
-      -
-        ins: D. Gugelmann
-      -
-        ins: N. Brownlee
-    date: 2014-04
   WWMM-BLOAT:
     title: Impact of TCP Congestion Control on Bufferbloat in Cellular Networks (in Proc. IEEE WoWMoM 2013)
     author:
@@ -197,11 +86,14 @@ Passive measurement of RTT, in particular, has both direct utility (see
 use cases, as well as indirect utility (see {{wireshark}}), since RTT is
 correlated with other useful metrics. In addition, the passive latency signal
 proposed in {{TSVWG-SPIN}} provides other opportunities for metric generation
-which are a consequence of its design.
+which are a consequence of its design (see {{more-spin}}).
 
 This document describes these use cases in order to motivate why passive
 measurability of RTT on a per-flow basis is an interesting and useful feature
-for a transport protocol to have.
+for a transport protocol to have. In the absence of other directly observable
+metrics such as loss and retransmission, as is the case with protocols with
+mostly-encrypted wire images {{?WIRE-IMAGE=I-D.trammell-wire-image}} such as
+QUIC {{?QUIC=I-D.ietf-quic-transport}}.
 
 ## About This Document
 
@@ -213,7 +105,7 @@ https://github.com/britram/draft-trammell-tsvwg-spin/issues. Comments and
 suggestions on this document can be made by filing an issue there, or by
 contacting the editor.
 
-This document is based in part on [?QUIC-SPIN=I-D.trammell-quic-spin],
+This document is based in part on {{?QUIC-SPIN=I-D.trammell-quic-spin}},
 however, aside from {{more-spin}}, it is not specific to the spin bit
 proposal.
 
@@ -355,7 +247,7 @@ series RTT data. Here we exploit two properties of transport protocols:
   per RTT, so inflight window evolution can be generated at each RTT sample r
   at t, and summing the number of bytes/packets sent between t - r and t.
 
-- Changes in the inflight window are can be related to sender reactions to
+- Changes in the inflight window can be related to sender reactions to
   congestion. For common loss- and ECN-based congestion control protocols such
   as NewReno {{?RFC6582}} and Cubic {{?RFC8312}}, inflight window reductions
   are correlated with sender-experienced congestion or loss.
