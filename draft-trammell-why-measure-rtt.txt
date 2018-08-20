@@ -79,7 +79,7 @@ Table of Contents
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   8
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .   8
      7.2.  Informative References  . . . . . . . . . . . . . . . . .   8
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  10
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   9
 
 1.  Introduction
 
@@ -415,10 +415,6 @@ Internet-Draft              Why measure RTT?                 August 2018
 
 7.1.  Normative References
 
-   [QUIC-SPIN-EXP]
-              Trammell, B. and M. Kuehlewind, "The QUIC Latency Spin
-              Bit", draft-ietf-quic-spin-exp (work in progress).
-
    [TSVWG-SPIN]
               Trammell, B., "A Transport-Independent Explicit Signal for
               Hybrid RTT Measurement", draft-trammell-tsvwg-spin-00
@@ -433,27 +429,6 @@ Internet-Draft              Why measure RTT?                 August 2018
               performance monitoring", draft-ietf-ippm-alt-mark-14 (work
               in progress), December 2017.
 
-   [CACM-TCP]
-              Strowes, S., "Passively Measuring TCP Round-Trip Times (in
-              Communications of the ACM)", October 2013.
-
-   [CARRA-RTT]
-              Carra, D., Avrachenkov, K., Alouf, S., Blanc, A., Nain,
-              P., and G. Post, "Passive Online RTT Estimation for Flow-
-              Aware Routers Using One-Way Traffic (NETWORKING 2010, LNCS
-              6091, pp. 109-121)", 2010.
-
-
-
-Trammell                Expires February 21, 2019               [Page 8]
-
-Internet-Draft              Why measure RTT?                 August 2018
-
-
-   [CONUS]    Morton, A., "Comparison of Backbone Node RTT and Great
-              Circle Distances (https://github.com/acmacm/CONUS-RTT)",
-              September 2017.
-
    [IMC-CONGESTION]
               Luckie, M., Dhamdhere, A., Clark, D., Huffaker, B., and k.
               claffy, "Challenges in Inferring Internet Interdomain
@@ -463,21 +438,17 @@ Internet-Draft              Why measure RTT?                 August 2018
               Sundaresan, S., Dhamdhere, A., Allman, M., and . k claffy,
               "TCP Congestion Signatures (in Proc. ACM IMC 2017)", n.d..
 
-   [MINQ]     Rescorla, E., "MINQ, a simple Go implementation of QUIC
-              (https://github.com/ekr/minq)", November 2017.
-
-   [MOKUMOKUREN]
-              Trammell, B., "Mokumokuren, a lightweight flow meter using
-              gopacket (https://github.com/britram/mokumokuren)",
-              November 2017.
-
-   [NOSPIN]   Morton, A., "Description of a tool chain to evaluate
-              Unidirectional Passive RTT measurement (and results)
-              (https://github.com/acmacm/PassiveRTT)", October 2017.
-
    [QUIC]     Iyengar, J. and M. Thomson, "QUIC: A UDP-Based Multiplexed
               and Secure Transport", draft-ietf-quic-transport-14 (work
               in progress), August 2018.
+
+
+
+
+Trammell                Expires February 21, 2019               [Page 8]
+
+Internet-Draft              Why measure RTT?                 August 2018
+
 
    [QUIC-SPIN]
               Trammell, B., Vaere, P., Even, R., Fioccola, G., Fossati,
@@ -499,40 +470,10 @@ Internet-Draft              Why measure RTT?                 August 2018
               Hybrid Types In-Between)", RFC 7799, DOI 10.17487/RFC7799,
               May 2016, <https://www.rfc-editor.org/info/rfc7799>.
 
-
-
-Trammell                Expires February 21, 2019               [Page 9]
-
-Internet-Draft              Why measure RTT?                 August 2018
-
-
    [RFC8312]  Rhee, I., Xu, L., Ha, S., Zimmermann, A., Eggert, L., and
               R. Scheffenegger, "CUBIC for Fast Long-Distance Networks",
               RFC 8312, DOI 10.17487/RFC8312, February 2018,
               <https://www.rfc-editor.org/info/rfc8312>.
-
-   [SHBAIR]   Shbair, W., Cholez, T., Francois, J., and I. Chrisment, "A
-              multi-level framework to identify HTTPS services (in Proc.
-              IEEE/IFIP NOMS)", April 2016.
-
-   [SPINBIT-REPORT]
-              De Vaere, P., "Latency Spinbit Implementation Experience
-              (https://devae.re/f/eth/quic/spinbit_report/)", November
-              2017.
-
-   [TMA-QOF]  Trammell, B., Gugelmann, D., and N. Brownlee, "Inline Data
-              Integrity Signals for Passive Measurement (in Proc. TMA
-              2014)", April 2014.
-
-   [TOKYO-PING]
-              Pelsser, C., Cittadini, L., Vissicchio, S., and R. Bush,
-              "From Paris to Tokyo - On the Suitability of ping to
-              Measure Latency (In Proc. ACM IMC 2014)", October 2014.
-
-   [TRILAT]   Trammell, B., "On the Suitability of RTT Measurements for
-              Geolocation
-              (https://github.com/britram/trilateration/blob/paper-rev-
-              1/paper.ipynb)", August 2017.
 
    [WIRE-IMAGE]
               Trammell, B. and M. Kuehlewind, "The Wire Image of a
@@ -557,4 +498,7 @@ Author's Address
 
 
 
-Trammell                Expires February 21, 2019              [Page 10]
+
+
+
+Trammell                Expires February 21, 2019               [Page 9]
