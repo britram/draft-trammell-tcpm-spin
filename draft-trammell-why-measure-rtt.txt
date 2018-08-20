@@ -95,7 +95,7 @@ Table of Contents
    since RTT is correlated with other useful metrics.  In addition, the
    passive latency signal proposed in [TSVWG-SPIN] provides other
    opportunities for metric generation which are a consequence of its
-   design.
+   design (see Section 4).
 
    This document describes these use cases in order to motivate why
    passive measurability of RTT on a per-flow basis is an interesting
