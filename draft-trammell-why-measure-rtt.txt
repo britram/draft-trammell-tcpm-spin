@@ -68,7 +68,7 @@ Table of Contents
    2.  Direct Utility of Passive RTT Measurement . . . . . . . . . .   3
      2.1.  Inter-domain Troubleshooting  . . . . . . . . . . . . . .   3
      2.2.  Bufferbloat Mitigation in Cellular Networks . . . . . . .   4
-     2.3.  Locating WiFi Problems in Home Networks . . . . . . . . .   5
+     2.3.  Locating WiFi Problems in Home Networks . . . . . . . . .   4
      2.4.  Internet Measurement Research . . . . . . . . . . . . . .   5
    3.  Indirect Utility of RTT Measurements  . . . . . . . . . . . .   5
    4.  Additional Metrics Derivable from the Spin Bit  . . . . . . .   6
@@ -124,9 +124,8 @@ Internet-Draft              Why measure RTT?                 August 2018
    Comments and suggestions on this document can be made by filing an
    issue there, or by contacting the editor.
 
-   This document is based in part on [?QUIC-SPIN=I-D.trammell-quic-
-   spin], however, aside from Section 4, it is not specific to the spin
-   bit proposal.
+   This document is based in part on [QUIC-SPIN], however, aside from
+   Section 4, it is not specific to the spin bit proposal.
 
 2.  Direct Utility of Passive RTT Measurement
 
@@ -161,7 +160,8 @@ Internet-Draft              Why measure RTT?                 August 2018
    Points on path can extract spatial delay metric samples [RFC6049]
    from fields of the transport layer (e.g.  TCP) or application layer
    (e.g.  RTP).  The information is captured in the upper layer because
-
+   neither the IP header nor the UDP layer includes fields allowing the
+   measurement of upstream and downstream delay.
 
 
 
@@ -169,9 +169,6 @@ Trammell                Expires February 21, 2019               [Page 3]
 
 Internet-Draft              Why measure RTT?                 August 2018
 
-
-   neither the IP header nor the UDP layer includes fields allowing the
-   measurement of upstream and downstream delay.
 
    Local network performance problems are detected with monitoring tools
    which observe the variation of upstream latency and downstream
@@ -214,10 +211,13 @@ Internet-Draft              Why measure RTT?                 August 2018
    a function also has the possibility to detect misbehaving flows and
    reduce the negative impact they have on the network.
 
+2.3.  Locating WiFi Problems in Home Networks
 
-
-
-
+   Many residential networks use WiFi (802.11) on the last segment, and
+   WiFi signal strength degradation manifests in high first-hop delay,
+   due to the fact that the MAC layer will retransmit packets lost at
+   that layer.  Measuring the RTT between endpoints on the customer
+   network and parts of the service provider's own infrastructure (which
 
 
 
@@ -226,13 +226,6 @@ Trammell                Expires February 21, 2019               [Page 4]
 Internet-Draft              Why measure RTT?                 August 2018
 
 
-2.3.  Locating WiFi Problems in Home Networks
-
-   Many residential networks use WiFi (802.11) on the last segment, and
-   WiFi signal strength degradation manifests in high first-hop delay,
-   due to the fact that the MAC layer will retransmit packets lost at
-   that layer.  Measuring the RTT between endpoints on the customer
-   network and parts of the service provider's own infrastructure (which
    have predictable delay characteristics) can be used to isolate this
    cause of performance problems.
 
@@ -275,6 +268,13 @@ Internet-Draft              Why measure RTT?                 August 2018
    measurement can also be used for indirect generation of other metrics
    when more direct means are not available.
 
+   A variety of tools are used for detailed troubleshooting of the
+   performance of single flows, both for debugging transport- and
+   application-layer protocol implementations, as well as to determine
+   whether a particular end-to-end performance issue is related to
+   particular network conditions.  One common type of visualization used
+   for TCP (implemented, for example, in the TCP Stream Graphs feature
+
 
 
 Trammell                Expires February 21, 2019               [Page 5]
@@ -282,12 +282,6 @@ Trammell                Expires February 21, 2019               [Page 5]
 Internet-Draft              Why measure RTT?                 August 2018
 
 
-   A variety of tools are used for detailed troubleshooting of the
-   performance of single flows, both for debugging transport- and
-   application-layer protocol implementations, as well as to determine
-   whether a particular end-to-end performance issue is related to
-   particular network conditions.  One common type of visualization used
-   for TCP (implemented, for example, in the TCP Stream Graphs feature
    of Wireshark, https://www.wireshark.org/) shows the development over
    time of the sequence and acknowledgment numbers, including
    retransmissions, and the evolution of the inflight and receiver flow
@@ -330,6 +324,12 @@ Internet-Draft              Why measure RTT?                 August 2018
    latency spin bit must use heuristics to reject samples which are
    potentially-lost, potentially-reordered, or potentially-delayed.
    When these heuristics are instrumented to note their sample rejection
+   rate, this rate itself is a potentially-useful proxy metric for
+   "difficulty" (vaguely defined) experienced by a flow.
+
+   When the latency signal is used with the Valid Edge Counter (VEC),
+   additional information is available in the wire image to reject
+   samples due to loss, delay, or reordering.  Analysis of the VEC
 
 
 
@@ -338,12 +338,6 @@ Trammell                Expires February 21, 2019               [Page 6]
 Internet-Draft              Why measure RTT?                 August 2018
 
 
-   rate, this rate itself is a potentially-useful proxy metric for
-   "difficulty" (vaguely defined) experienced by a flow.
-
-   When the latency signal is used with the Valid Edge Counter (VEC),
-   additional information is available in the wire image to reject
-   samples due to loss, delay, or reordering.  Analysis of the VEC
    together with the series of spin bit values can be used to recognize
    single loss and reordering events, which can be used to generate loss
    and reordering metrics at the resolution of the flow's round trip
@@ -386,6 +380,12 @@ Internet-Draft              Why measure RTT?                 August 2018
 
    o  Piet De Vaere, ETH Zurich
 
+   o  Roni Even, Huawei
+
+   o  Giuseppe Fioccola, Telecom Italia
+
+   o  Thomas Fossati, Nokia
+
 
 
 
@@ -393,12 +393,6 @@ Trammell                Expires February 21, 2019               [Page 7]
 
 Internet-Draft              Why measure RTT?                 August 2018
 
-
-   o  Roni Even, Huawei
-
-   o  Giuseppe Fioccola, Telecom Italia
-
-   o  Thomas Fossati, Nokia
 
    o  Marcus Ihlar, Ericsson
 
@@ -443,18 +437,18 @@ Internet-Draft              Why measure RTT?                 August 2018
               Strowes, S., "Passively Measuring TCP Round-Trip Times (in
               Communications of the ACM)", October 2013.
 
+   [CARRA-RTT]
+              Carra, D., Avrachenkov, K., Alouf, S., Blanc, A., Nain,
+              P., and G. Post, "Passive Online RTT Estimation for Flow-
+              Aware Routers Using One-Way Traffic (NETWORKING 2010, LNCS
+              6091, pp. 109-121)", 2010.
+
 
 
 Trammell                Expires February 21, 2019               [Page 8]
 
 Internet-Draft              Why measure RTT?                 August 2018
 
-
-   [CARRA-RTT]
-              Carra, D., Avrachenkov, K., Alouf, S., Blanc, A., Nain,
-              P., and G. Post, "Passive Online RTT Estimation for Flow-
-              Aware Routers Using One-Way Traffic (NETWORKING 2010, LNCS
-              6091, pp. 109-121)", 2010.
 
    [CONUS]    Morton, A., "Comparison of Backbone Node RTT and Great
               Circle Distances (https://github.com/acmacm/CONUS-RTT)",
@@ -485,6 +479,13 @@ Internet-Draft              Why measure RTT?                 August 2018
               and Secure Transport", draft-ietf-quic-transport-14 (work
               in progress), August 2018.
 
+   [QUIC-SPIN]
+              Trammell, B., Vaere, P., Even, R., Fioccola, G., Fossati,
+              T., Ihlar, M., Morton, A., and S. Emile, "Adding Explicit
+              Passive Measurability of Two-Way Latency to the QUIC
+              Transport Protocol", draft-trammell-quic-spin-03 (work in
+              progress), May 2018.
+
    [RFC6049]  Morton, A. and E. Stephan, "Spatial Composition of
               Metrics", RFC 6049, DOI 10.17487/RFC6049, January 2011,
               <https://www.rfc-editor.org/info/rfc6049>.
@@ -497,7 +498,6 @@ Internet-Draft              Why measure RTT?                 August 2018
    [RFC7799]  Morton, A., "Active and Passive Metrics and Methods (with
               Hybrid Types In-Between)", RFC 7799, DOI 10.17487/RFC7799,
               May 2016, <https://www.rfc-editor.org/info/rfc7799>.
-
 
 
 
