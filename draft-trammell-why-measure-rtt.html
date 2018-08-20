@@ -284,7 +284,6 @@ ul.toc li {
 <link href="#rfc.section.2.3" rel="Chapter" title="2.3 Locating WiFi Problems in Home Networks">
 <link href="#rfc.section.2.4" rel="Chapter" title="2.4 Internet Measurement Research">
 <link href="#rfc.section.3" rel="Chapter" title="3 Indirect Utility of RTT Measurements">
-<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Intraflow performance troubleshooting">
 <link href="#rfc.section.4" rel="Chapter" title="4 Additional Metrics Derivable from the Spin Bit">
 <link href="#rfc.section.4.1" rel="Chapter" title="4.1 Derived Loss and Reordering">
 <link href="#rfc.section.4.2" rel="Chapter" title="4.2 Two-Point Intradomain Measurement">
@@ -301,9 +300,9 @@ ul.toc li {
 
   <meta name="dct.creator" content="Trammell, B." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-trammell-why-measure-rtt" />
-  <meta name="dct.issued" scheme="ISO8601" content="2018-07-20" />
-  <meta name="dct.abstract" content="This document describes the utility of passive latency measurement, both for the generation of latency metrics, as well as for other measurement tasks, when passive latency measurement is the only facility available for measurement. It additionally discusses other metrics derivable from the transport-independent latency spin signal defined in " />
-  <meta name="description" content="This document describes the utility of passive latency measurement, both for the generation of latency metrics, as well as for other measurement tasks, when passive latency measurement is the only facility available for measurement. It additionally discusses other metrics derivable from the transport-independent latency spin signal defined in " />
+  <meta name="dct.issued" scheme="ISO8601" content="2018-08-20" />
+  <meta name="dct.abstract" content="This document describes the utility of passive two-way latency measurement, both for the generation of latency metrics, as well as for other measurement tasks, when passive latency measurement is the only facility available for measurement. It additionally discusses other metrics derivable from the transport-independent latency spin signal defined in " />
+  <meta name="description" content="This document describes the utility of passive two-way latency measurement, both for the generation of latency metrics, as well as for other measurement tasks, when passive latency measurement is the only facility available for measurement. It additionally discusses other metrics derivable from the transport-independent latency spin signal defined in " />
 
 </head>
 
@@ -322,10 +321,10 @@ ul.toc li {
 </tr>
 <tr>
 <td class="left">Intended status: Informational</td>
-<td class="right">July 20, 2018</td>
+<td class="right">August 20, 2018</td>
 </tr>
 <tr>
-<td class="left">Expires: January 21, 2019</td>
+<td class="left">Expires: February 21, 2019</td>
 <td class="right"></td>
 </tr>
 
@@ -337,12 +336,12 @@ ul.toc li {
   <span class="filename">draft-trammell-why-measure-rtt</span></p>
   
   <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
-<p>This document describes the utility of passive latency measurement, both for the generation of latency metrics, as well as for other measurement tasks, when passive latency measurement is the only facility available for measurement. It additionally discusses other metrics derivable from the transport-independent latency spin signal defined in <a href="#TSVWG-SPIN" class="xref">[TSVWG-SPIN]</a>.</p>
+<p>This document describes the utility of passive two-way latency measurement, both for the generation of latency metrics, as well as for other measurement tasks, when passive latency measurement is the only facility available for measurement. It additionally discusses other metrics derivable from the transport-independent latency spin signal defined in <a href="#TSVWG-SPIN" class="xref">[TSVWG-SPIN]</a>.</p>
 <h1 id="rfc.status"><a href="#rfc.status">Status of This Memo</a></h1>
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on January 21, 2019.</p>
+<p>This Internet-Draft will expire on February 21, 2019.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2018 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -368,9 +367,7 @@ ul.toc li {
 </li>
 </ul><li>3.   <a href="#rfc.section.3">Indirect Utility of RTT Measurements</a>
 </li>
-<ul><li>3.1.   <a href="#rfc.section.3.1">Intraflow performance troubleshooting</a>
-</li>
-</ul><li>4.   <a href="#rfc.section.4">Additional Metrics Derivable from the Spin Bit</a>
+<li>4.   <a href="#rfc.section.4">Additional Metrics Derivable from the Spin Bit</a>
 </li>
 <ul><li>4.1.   <a href="#rfc.section.4.1">Derived Loss and Reordering</a>
 </li>
@@ -395,7 +392,9 @@ ul.toc li {
   <h1 id="rfc.section.1">
 <a href="#rfc.section.1">1.</a> <a href="#introduction" id="introduction">Introduction</a>
 </h1>
-<p id="rfc.section.1.p.1">[frontmatter goes here]</p>
+<p id="rfc.section.1.p.1">Latency is a key metric to understanding network operation and performance.  Passive measurement allows inspection of latency on productive traffic, avoiding problems with different treatment of productive and measurement traffic, and enables opportunistic measurement of latency without active measurement overhead.</p>
+<p id="rfc.section.1.p.2">Passive measurement of RTT, in particular, has both direct utility (see <a href="#use-cases" class="xref">Section 2</a>), generating RTT samples for the measurement of RTT for various use cases, as well as indirect utility (see <a href="#wireshark" class="xref">Section 3</a>), since RTT is correlated with other useful metrics. In addition, the passive latency signal proposed in <a href="#TSVWG-SPIN" class="xref">[TSVWG-SPIN]</a> provides other opportunities for metric generation which are a consequence of its design.</p>
+<p id="rfc.section.1.p.3">This document describes these use cases in order to motivate why passive measurability of RTT on a per-flow basis is an interesting and useful feature for a transport protocol to have.</p>
 <h1 id="rfc.section.1.1">
 <a href="#rfc.section.1.1">1.1.</a> <a href="#about-this-document" id="about-this-document">About This Document</a>
 </h1>
@@ -442,18 +441,15 @@ ul.toc li {
 <a href="#rfc.section.3">3.</a> <a href="#wireshark" id="wireshark">Indirect Utility of RTT Measurements</a>
 </h1>
 <p id="rfc.section.3.p.1">In addition to the direct generation of RTT metric samples, RTT measurement can also be used for indirect generation of other metrics when more direct means are not available.</p>
-<h1 id="rfc.section.3.1">
-<a href="#rfc.section.3.1">3.1.</a> <a href="#intraflow-performance-troubleshooting" id="intraflow-performance-troubleshooting">Intraflow performance troubleshooting</a>
-</h1>
-<p id="rfc.section.3.1.p.1">A variety of tools are used for detailed troubleshooting of the performance of single flows, both for debugging transport- and application-layer protocol implementations, as well as to determine whether a particular end-to-end performance issue is related to particular network conditions. One common type of visualization  used for TCP (implemented, for example, in the TCP Stream Graphs feature of Wireshark, https://www.wireshark.org/) shows the development over time of the sequence and acknowledgment numbers, including retransmissions, and the evolution of the inflight and receiver flow control windows over time. By analyzing the relationship among loss, latency, and throughput, the precise cause of an observed performance on a given flow can be determined.</p>
-<p id="rfc.section.3.1.p.2">While RTT measurements on their own are not enough to drive such a visualization, many similar techniques can be built on high-resolution time series RTT data. Here we exploit two properties of transport protocols:</p>
+<p id="rfc.section.3.p.2">A variety of tools are used for detailed troubleshooting of the performance of single flows, both for debugging transport- and application-layer protocol implementations, as well as to determine whether a particular end-to-end performance issue is related to particular network conditions. One common type of visualization  used for TCP (implemented, for example, in the TCP Stream Graphs feature of Wireshark, https://www.wireshark.org/) shows the development over time of the sequence and acknowledgment numbers, including retransmissions, and the evolution of the inflight and receiver flow control windows over time. By analyzing the relationship among loss, latency, and throughput, the precise cause of an observed performance on a given flow can be determined.</p>
+<p id="rfc.section.3.p.3">While RTT measurements on their own are not enough to drive such a visualization, many similar techniques can be built on high-resolution time series RTT data. Here we exploit two properties of transport protocols:</p>
 <p></p>
 
 <ul>
 <li>The size of the inflight window is equal to the number of bytes/packets sent per RTT, so inflight window evolution can be generated at each RTT sample r at t, and summing the number of bytes/packets sent between t - r and t.</li>
-<li>Changes in the inflight window are can be related to sender reactions to congestion. For common loss- and ECN-based congestion control protocols such as NewReno <a href="#RFC6582" class="xref">[RFC6582]</a> and Cubic <a href="#RFC8312" class="xref">[RFC8312]</a>, inflight window reductions are correlated with sender-experienced congestion or loss.</li>
+<li>Changes in the inflight window can be related to sender reactions to congestion. For common loss- and ECN-based congestion control protocols such as NewReno <a href="#RFC6582" class="xref">[RFC6582]</a> and Cubic <a href="#RFC8312" class="xref">[RFC8312]</a>, inflight window reductions are correlated with sender-experienced congestion or loss.</li>
 </ul>
-<p id="rfc.section.3.1.p.4">Inflight window evolution over time, together with heuristic assumptions about server behavior, can go a long way toward replacing direct visibility of transport protocol dynamics (sequence and acknowledgment number seqence over time) for encrypted transports; the exact details of this are a subject of present and future research.</p>
+<p id="rfc.section.3.p.5">Inflight window evolution over time, together with heuristic assumptions about server behavior, can go a long way toward replacing direct visibility of transport protocol dynamics (sequence and acknowledgment number seqence over time) for encrypted transports; the exact details of this are a subject of present and future research.</p>
 <h1 id="rfc.section.4">
 <a href="#rfc.section.4">4.</a> <a href="#more-spin" id="more-spin">Additional Metrics Derivable from the Spin Bit</a>
 </h1>
