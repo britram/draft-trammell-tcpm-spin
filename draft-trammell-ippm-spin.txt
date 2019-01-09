@@ -684,7 +684,7 @@ Internet-Draft                  Spin Bits                   January 2019
               De Vaere, P., Buehler, T., Kuehlewind, M., and B.
               Trammell, "Three Bits Suffice - Explicit Support for
               Passive Measurement of Internet Latency in QUIC and TCP
-              (ACM IMC 2018)", n.d..
+              (ACM IMC 2018)", November 2018.
 
    [IPIM]     Allman, M., Beverly, R., and B. Trammell, "Principles for
               Measurability in Protocol Design (ACM CCR 47(2), pp.
