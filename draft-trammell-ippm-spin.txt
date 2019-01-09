@@ -2,14 +2,14 @@
 
 
 
-TSVWG                                                   B. Trammell, Ed.
+IP Performance Measurement WG                           B. Trammell, Ed.
 Internet-Draft                                                ETH Zurich
-Intended status: Experimental                              July 02, 2018
-Expires: January 3, 2019
+Intended status: Experimental                           January 09, 2019
+Expires: July 13, 2019
 
 
-   A Transport-Independent Explicit Signal for Hybrid RTT Measurement
-                    draft-trammell-tsvwg-spin-latest
+     An Explicit Transport-Layer Signal for Hybrid RTT Measurement
+                    draft-trammell-ippm-spin-latest
 
 Abstract
 
@@ -38,11 +38,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 3, 2019.
+   This Internet-Draft will expire on July 13, 2019.
 
 Copyright Notice
 
-   Copyright (c) 2018 IETF Trust and the persons identified as the
+   Copyright (c) 2019 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Trammell                 Expires January 3, 2019                [Page 1]
+Trammell                  Expires July 13, 2019                 [Page 1]
 
-Internet-Draft                  Spin Bits                      July 2018
+Internet-Draft                  Spin Bits                   January 2019
 
 
    to this document.  Code Components extracted from this document must
@@ -69,17 +69,18 @@ Table of Contents
    2.  Signal Generation Mechanism . . . . . . . . . . . . . . . . .   3
      2.1.  Illustrating the Mechanism  . . . . . . . . . . . . . . .   4
    3.  Using the Signal for Hybrid RTT Measurement . . . . . . . . .   6
-   4.  Binding the Hybrid RTT Measurement Signal to Transport
+   4.  Using Only the Spin Bit . . . . . . . . . . . . . . . . . . .   8
+   5.  Binding the Hybrid RTT Measurement Signal to Transport
        Protocols . . . . . . . . . . . . . . . . . . . . . . . . . .   8
-     4.1.  QUIC  . . . . . . . . . . . . . . . . . . . . . . . . . .   8
-     4.2.  TCP . . . . . . . . . . . . . . . . . . . . . . . . . . .   9
-   5.  Discussion  . . . . . . . . . . . . . . . . . . . . . . . . .   9
-     5.1.  Why the transport layer?  . . . . . . . . . . . . . . . .   9
-   6.  Privacy and Security Considerations . . . . . . . . . . . . .  10
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  11
-   8.  Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  12
-   9.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  12
-   10. Informative References  . . . . . . . . . . . . . . . . . . .  12
+     5.1.  QUIC  . . . . . . . . . . . . . . . . . . . . . . . . . .   8
+     5.2.  TCP . . . . . . . . . . . . . . . . . . . . . . . . . . .   8
+   6.  Discussion  . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     6.1.  Why the transport layer?  . . . . . . . . . . . . . . . .   9
+   7.  Privacy and Security Considerations . . . . . . . . . . . . .  10
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  11
+   9.  Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  12
+   10. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  12
+   11. Informative References  . . . . . . . . . . . . . . . . . . .  12
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  14
 
 1.  Introduction
@@ -105,15 +106,15 @@ Table of Contents
    effects.  For example, [CARRA-RTT] makes implicit assumptions about
    congestion control and pacing that may not hold for all senders, and
    timestamp-based methods require the TCP timestamp option to operate
-   effectively, which adds 10 bytes of overhead to every packet and
 
 
 
-Trammell                 Expires January 3, 2019                [Page 2]
+Trammell                  Expires July 13, 2019                 [Page 2]
 
-Internet-Draft                  Spin Bits                      July 2018
+Internet-Draft                  Spin Bits                   January 2019
 
 
+   effectively, which adds 10 bytes of overhead to every packet and
    provides a relatively large amount of information for sender
    fingerprinting [ZANDER-TS].
 
@@ -124,7 +125,9 @@ Internet-Draft                  Spin Bits                      July 2018
    signal consists of three bits: a spin bit, which oscillates once per
    end-to-end RTT, and a two-bit Valid Edge Counter (VEC), which
    compensates for loss and reordering of the spin bit to increase
-   fidelity of the signal in less than ideal network conditions.
+   fidelity of the signal in less than ideal network conditions.  An
+   evaluation of the spin bit and VEC mechanism in a variety of
+   simulated and Internet testbed environments is given in [IMC-SPIN].
 
    The document starts with a mechanism applicable to any transport-
    layer protocol, then explains how to bind the signal to a variety of
@@ -159,16 +162,17 @@ Internet-Draft                  Spin Bits                      July 2018
    2.  takes the spin bit from the incoming packet and updates its
        NEXT_SPIN value for the connection.  If the receiver was the
        responder (server) of the connection, it sets NEXT_SPIN to the to
+
+
+
+Trammell                  Expires July 13, 2019                 [Page 3]
+
+Internet-Draft                  Spin Bits                   January 2019
+
+
        the spin bit on the incoming packet.  If the receiver was the
        initiator (client) of the connection, it sets NEXT_SPIN to the
        inverse of the spin bit on the incoming packet.
-
-
-
-Trammell                 Expires January 3, 2019                [Page 3]
-
-Internet-Draft                  Spin Bits                      July 2018
-
 
    3.  updates its NEXT_VEC value for the connection as follows.  If the
        incoming spin bit value is the same as LAST_SPIN (see below), it
@@ -217,13 +221,9 @@ Internet-Draft                  Spin Bits                      July 2018
 
 
 
-
-
-
-
-Trammell                 Expires January 3, 2019                [Page 4]
+Trammell                  Expires July 13, 2019                 [Page 4]
 
-Internet-Draft                  Spin Bits                      July 2018
+Internet-Draft                  Spin Bits                   January 2019
 
 
    +--------+   --  --  --  --  --   +--------+
@@ -277,9 +277,9 @@ Internet-Draft                  Spin Bits                      July 2018
 
 
 
-Trammell                 Expires January 3, 2019                [Page 5]
+Trammell                  Expires July 13, 2019                 [Page 5]
 
-Internet-Draft                  Spin Bits                      July 2018
+Internet-Draft                  Spin Bits                   January 2019
 
 
    observation
@@ -333,9 +333,9 @@ Internet-Draft                  Spin Bits                      July 2018
 
 
 
-Trammell                 Expires January 3, 2019                [Page 6]
+Trammell                  Expires July 13, 2019                 [Page 6]
 
-Internet-Draft                  Spin Bits                      July 2018
+Internet-Draft                  Spin Bits                   January 2019
 
 
    RTT, and the VEC counts up to 3 and holds on the edges in the spin
@@ -389,44 +389,38 @@ Internet-Draft                  Spin Bits                      July 2018
 
 
 
-Trammell                 Expires January 3, 2019                [Page 7]
+Trammell                  Expires July 13, 2019                 [Page 7]
 
-Internet-Draft                  Spin Bits                      July 2018
+Internet-Draft                  Spin Bits                   January 2019
 
 
-4.  Binding the Hybrid RTT Measurement Signal to Transport Protocols
+4.  Using Only the Spin Bit
+
+   Note that, in the absence of loss and reordering, the single spin bit
+   on its own suffices to provide one accurate RTT sample per RTT to on-
+   path observers.  Instead of using two additional bits for the VEC to
+   reject bad samples caused by less than ideal network conditions,
+   protocol designers can instead opt to add only the spin bit to the
+   protocol, and shift the burden of correcting the RTT sample stream to
+   observers, in keeping with the third principle elaborated in [IPIM]:
+   the cost of deriving measurements from measurable protocols should be
+   shifted from the participants to the measurement consumers where
+   possible.  Indeed, this is the approach followed by QUIC when adding
+   the spin signal to the protocol (see Section 5.1).
+
+5.  Binding the Hybrid RTT Measurement Signal to Transport Protocols
 
    The following subsections define how to bind the spin bit to various
    IETF transport protocols.  As of this writing, bindings are specified
    for QUIC and TCP.
 
-4.1.  QUIC
+5.1.  QUIC
 
    This signal was originally specified for the QUIC transport protocol
    [QUIC-TRANSPORT], as the encrypted design of that protocol makes
    passive RTT measurement impossible.  The binding of this signal to
    QUIC is partially described in [QUIC-SPIN-EXP], which adds the spin
    bit only (without the VEC) to QUIC for experimentation purposes.
-
-   The full signal can be added to QUIC by adding the VEC mechanism to
-   the spin bit mechanism already defined in [QUIC-SPIN-EXP], encoding
-   the VEC into QUIC short packet headers using the three bits reserved
-   for that purpose, as shown in Figure 7.
-
-    0                   1                   2                   3
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+
-   |0|K|1|1|0|S|VEC|
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                Destination Connection ID (0..144)           ...
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                      Packet Number (8/16/32)                ...
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                     Protected Payload (*)                   ...
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-
-        Figure 7: QUIC short packet header with spin bit S and VEC
 
    The "latest packet" determination for QUIC is made using the QUIC
    packet number: only packets which have a packet number greater than
@@ -439,22 +433,22 @@ Internet-Draft                  Spin Bits                      July 2018
    start sending short header packets first, both sides initialize their
    NEXT_SPIN value to 0.
 
-
-
-
-
-
-
-Trammell                 Expires January 3, 2019                [Page 8]
-
-Internet-Draft                  Spin Bits                      July 2018
-
-
-4.2.  TCP
+5.2.  TCP
 
    The signal can be added to TCP by defining bit 4 of bytes 13-14 of
    the TCP header to carry the spin bit, and bits 5 and 6 to carry the
-   VEC, as shown in Figure 8.
+   VEC, as shown in Figure 7.
+
+
+
+
+
+
+
+Trammell                  Expires July 13, 2019                 [Page 8]
+
+Internet-Draft                  Spin Bits                   January 2019
+
 
      0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
    +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
@@ -463,7 +457,7 @@ Internet-Draft                  Spin Bits                      July 2018
    |               |   |       | v | R | E | G | K | H | T | N | N |
    +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
 
-    Figure 8: Definition bytes 13 and 14 of TCP header with spin bit S
+   Figure 7: Definition of bytes 13 and 14 of TCP header with spin bit S
                                   and VEC
 
    The "latest packet" determination for TCP is made using the TCP
@@ -482,7 +476,13 @@ Internet-Draft                  Spin Bits                      July 2018
    on its initial SYN.  If this SYN is lost, the client disables
    generation of the signal for the life of the connection.
 
-5.  Discussion
+   A cursory initial evaluation presented in [IMC-SPIN] suggests that
+   the deployability of a latency spin signal in the reserved bits of
+   TCP is on the order of equivalent to the deployability of a latency
+   spin signal carried in a newly-defined experimental TCP option
+   [RFC6694].
+
+6.  Discussion
 
    This signal is the result of work carried out in various BoFs and
    working groups in the IETF.  This section attempts to answer
@@ -490,9 +490,9 @@ Internet-Draft                  Spin Bits                      July 2018
    such as that outlined in this document.
 
    Additional discussion of privacy and security relevant questions is
-   given in Section 6.
+   given in Section 7.
 
-5.1.  Why the transport layer?
+6.1.  Why the transport layer?
 
    As this path signal is (by definition) designed for consumption by
    devices on the path, and the transport layer is designed for end-to-
@@ -501,9 +501,9 @@ Internet-Draft                  Spin Bits                      July 2018
 
 
 
-Trammell                 Expires January 3, 2019                [Page 9]
+Trammell                  Expires July 13, 2019                 [Page 9]
 
-Internet-Draft                  Spin Bits                      July 2018
+Internet-Draft                  Spin Bits                   January 2019
 
 
    layer violation?  The answer is both "not really" and "it doesn't
@@ -527,7 +527,7 @@ Internet-Draft                  Spin Bits                      July 2018
    network paths [RFC7872], and IPv4 [RFC0791] options are even less
    usable.
 
-6.  Privacy and Security Considerations
+7.  Privacy and Security Considerations
 
    The privacy considerations for the hybrid RTT measurement signal are
    essentially the same as those for passive RTT measurement in general.
@@ -557,9 +557,9 @@ Internet-Draft                  Spin Bits                      July 2018
 
 
 
-Trammell                 Expires January 3, 2019               [Page 10]
+Trammell                  Expires July 13, 2019                [Page 10]
 
-Internet-Draft                  Spin Bits                      July 2018
+Internet-Draft                  Spin Bits                   January 2019
 
 
    observer in a situation to observe RTT passively need not infer the
@@ -605,18 +605,25 @@ Internet-Draft                  Spin Bits                      July 2018
    of said regulation or contract, to be a sufficient incentive in the
    general case not to do it.
 
-7.  IANA Considerations
+8.  IANA Considerations
 
-   This document, if published as an RFC, would request the following
-   assignments in the TCP Header Flags registry for the purposes of this
-   experiment:
+   This document has no current actions for IANA.
 
 
 
-Trammell                 Expires January 3, 2019               [Page 11]
+
+
+Trammell                  Expires July 13, 2019                [Page 11]
 
-Internet-Draft                  Spin Bits                      July 2018
+Internet-Draft                  Spin Bits                   January 2019
 
+
+   Should consensus emerge that deployment of the spin bit in TCP is
+   worth pursuing, a companion document submitted to the TCP Maintenance
+   and Minor Extensions (TCPM) Working Group would need to request the
+   following assignments in the IANA TCP Header Flags registry for the
+   purposes of carrying the Spin Bit and Valid Edge Counter on TCP
+   packets:
 
    o  Bit 4: Hybrid RTT Measurement Spin Bit, as defined in this
       document
@@ -627,7 +634,7 @@ Internet-Draft                  Spin Bits                      July 2018
    o  Bit 6: Hybrid RTT Measurement Valid Edge Counter, low-order bit,
       as defined in this document
 
-8.  Contributors
+9.  Contributors
 
    This work is based in part on [QUIC-SPIN], of which it is a
    generalization.  In addition to the editor(s) and author(s) of this
@@ -635,7 +642,7 @@ Internet-Draft                  Spin Bits                      July 2018
    Giuseppe Fioccola, Thomas Fossati, Marcus Ihlar, Al Morton, and Emile
    Stephan.
 
-9.  Acknowledgments
+10.  Acknowledgments
 
    Many thanks to Christian Huitema, who originally proposed the spin
    bit as pull request 609 on [QUIC-TRANSPORT].  Thanks to Tobias
@@ -650,11 +657,22 @@ Internet-Draft                  Spin Bits                      July 2018
    for Education, Research, and Innovation under contract no. 15.0268.
    This support does not imply endorsement.
 
-10.  Informative References
+11.  Informative References
 
    [CACM-TCP]
               Strowes, S., "Passively Measuring TCP Round-Trip Times (in
               Communications of the ACM)", October 2013.
+
+
+
+
+
+
+
+Trammell                  Expires July 13, 2019                [Page 12]
+
+Internet-Draft                  Spin Bits                   January 2019
+
 
    [CARRA-RTT]
               Carra, D., Avrachenkov, K., Alouf, S., Blanc, A., Nain,
@@ -662,17 +680,15 @@ Internet-Draft                  Spin Bits                      July 2018
               Aware Routers Using One-Way Traffic (NETWORKING 2010, LNCS
               6091, pp. 109-121)", 2010.
 
+   [IMC-SPIN]
+              De Vaere, P., Buehler, T., Kuehlewind, M., and B.
+              Trammell, "Three Bits Suffice - Explicit Support for
+              Passive Measurement of Internet Latency in QUIC and TCP
+              (ACM IMC 2018)", n.d..
+
    [IPIM]     Allman, M., Beverly, R., and B. Trammell, "Principles for
               Measurability in Protocol Design (ACM CCR 47(2), pp.
               2-12)", April 2017.
-
-
-
-
-Trammell                 Expires January 3, 2019               [Page 12]
-
-Internet-Draft                  Spin Bits                      July 2018
-
 
    [PAM-RTT-PRIVACY]
               Trammell, B. and M. Kuehlewind, "Revisiting the Privacy
@@ -680,8 +696,8 @@ Internet-Draft                  Spin Bits                      July 2018
               LNCS 10771, pp. 73-84)", March 2018.
 
    [PATH-SIGNALS]
-              Hardie, T., "Path Signals", draft-iab-path-signals-00
-              (work in progress), May 2018.
+              Hardie, T., "Transport Protocol Path Signals", draft-iab-
+              path-signals-03 (work in progress), January 2019.
 
    [QUIC-SPIN]
               Trammell, B., Vaere, P., Even, R., Fioccola, G., Fossati,
@@ -692,21 +708,35 @@ Internet-Draft                  Spin Bits                      July 2018
 
    [QUIC-SPIN-EXP]
               Trammell, B. and M. Kuehlewind, "The QUIC Latency Spin
-              Bit", draft-ietf-quic-spin-exp-00 (work in progress),
-              April 2018.
+              Bit", draft-ietf-quic-spin-exp-01 (work in progress),
+              October 2018.
 
    [QUIC-TRANSPORT]
               Iyengar, J. and M. Thomson, "QUIC: A UDP-Based Multiplexed
-              and Secure Transport", draft-ietf-quic-transport-13 (work
-              in progress), June 2018.
+              and Secure Transport", draft-ietf-quic-transport-17 (work
+              in progress), December 2018.
 
    [RFC0791]  Postel, J., "Internet Protocol", STD 5, RFC 791,
               DOI 10.17487/RFC0791, September 1981,
               <https://www.rfc-editor.org/info/rfc791>.
 
+
+
+
+
+
+Trammell                  Expires July 13, 2019                [Page 13]
+
+Internet-Draft                  Spin Bits                   January 2019
+
+
    [RFC0793]  Postel, J., "Transmission Control Protocol", STD 7,
               RFC 793, DOI 10.17487/RFC0793, September 1981,
               <https://www.rfc-editor.org/info/rfc793>.
+
+   [RFC6694]  Moonesamy, S., Ed., "The "about" URI Scheme", RFC 6694,
+              DOI 10.17487/RFC6694, August 2012,
+              <https://www.rfc-editor.org/info/rfc6694>.
 
    [RFC7373]  Trammell, B., "Textual Representation of IP Flow
               Information Export (IPFIX) Abstract Data Types", RFC 7373,
@@ -722,13 +752,6 @@ Internet-Draft                  Spin Bits                      July 2018
               Extension Headers in the Real World", RFC 7872,
               DOI 10.17487/RFC7872, June 2016,
               <https://www.rfc-editor.org/info/rfc7872>.
-
-
-
-Trammell                 Expires January 3, 2019               [Page 13]
-
-Internet-Draft                  Spin Bits                      July 2018
-
 
    [RFC8200]  Deering, S. and R. Hinden, "Internet Protocol, Version 6
               (IPv6) Specification", STD 86, RFC 8200,
@@ -758,27 +781,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Trammell                 Expires January 3, 2019               [Page 14]
+Trammell                  Expires July 13, 2019                [Page 14]

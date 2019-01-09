@@ -4,8 +4,8 @@
 
 QUIC                                                         B. Trammell
 Internet-Draft                                                ETH Zurich
-Intended status: Informational                           August 20, 2018
-Expires: February 21, 2019
+Intended status: Informational                          January 09, 2019
+Expires: July 13, 2019
 
 
          Why do we need passive measurement of round trip time?
@@ -35,11 +35,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on February 21, 2019.
+   This Internet-Draft will expire on July 13, 2019.
 
 Copyright Notice
 
-   Copyright (c) 2018 IETF Trust and the persons identified as the
+   Copyright (c) 2019 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Trammell                Expires February 21, 2019               [Page 1]
+Trammell                  Expires July 13, 2019                 [Page 1]
 
-Internet-Draft              Why measure RTT?                 August 2018
+Internet-Draft              Why measure RTT?                January 2019
 
 
    the Trust Legal Provisions and are provided without warranty as
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Trammell                Expires February 21, 2019               [Page 2]
+Trammell                  Expires July 13, 2019                 [Page 2]
 
-Internet-Draft              Why measure RTT?                 August 2018
+Internet-Draft              Why measure RTT?                January 2019
 
 
 1.1.  About This Document
@@ -165,9 +165,9 @@ Internet-Draft              Why measure RTT?                 August 2018
 
 
 
-Trammell                Expires February 21, 2019               [Page 3]
+Trammell                  Expires July 13, 2019                 [Page 3]
 
-Internet-Draft              Why measure RTT?                 August 2018
+Internet-Draft              Why measure RTT?                January 2019
 
 
    Local network performance problems are detected with monitoring tools
@@ -221,9 +221,9 @@ Internet-Draft              Why measure RTT?                 August 2018
 
 
 
-Trammell                Expires February 21, 2019               [Page 4]
+Trammell                  Expires July 13, 2019                 [Page 4]
 
-Internet-Draft              Why measure RTT?                 August 2018
+Internet-Draft              Why measure RTT?                January 2019
 
 
    have predictable delay characteristics) can be used to isolate this
@@ -277,9 +277,9 @@ Internet-Draft              Why measure RTT?                 August 2018
 
 
 
-Trammell                Expires February 21, 2019               [Page 5]
+Trammell                  Expires July 13, 2019                 [Page 5]
 
-Internet-Draft              Why measure RTT?                 August 2018
+Internet-Draft              Why measure RTT?                January 2019
 
 
    of Wireshark, https://www.wireshark.org/) shows the development over
@@ -333,9 +333,9 @@ Internet-Draft              Why measure RTT?                 August 2018
 
 
 
-Trammell                Expires February 21, 2019               [Page 6]
+Trammell                  Expires July 13, 2019                 [Page 6]
 
-Internet-Draft              Why measure RTT?                 August 2018
+Internet-Draft              Why measure RTT?                January 2019
 
 
    together with the series of spin bit values can be used to recognize
@@ -389,9 +389,9 @@ Internet-Draft              Why measure RTT?                 August 2018
 
 
 
-Trammell                Expires February 21, 2019               [Page 7]
+Trammell                  Expires July 13, 2019                 [Page 7]
 
-Internet-Draft              Why measure RTT?                 August 2018
+Internet-Draft              Why measure RTT?                January 2019
 
 
    o  Marcus Ihlar, Ericsson
@@ -439,15 +439,15 @@ Internet-Draft              Why measure RTT?                 August 2018
               "TCP Congestion Signatures (in Proc. ACM IMC 2017)", n.d..
 
    [QUIC]     Iyengar, J. and M. Thomson, "QUIC: A UDP-Based Multiplexed
-              and Secure Transport", draft-ietf-quic-transport-14 (work
-              in progress), August 2018.
+              and Secure Transport", draft-ietf-quic-transport-17 (work
+              in progress), December 2018.
 
 
 
 
-Trammell                Expires February 21, 2019               [Page 8]
+Trammell                  Expires July 13, 2019                 [Page 8]
 
-Internet-Draft              Why measure RTT?                 August 2018
+Internet-Draft              Why measure RTT?                January 2019
 
 
    [QUIC-SPIN]
@@ -501,4 +501,4 @@ Author's Address
 
 
 
-Trammell                Expires February 21, 2019               [Page 9]
+Trammell                  Expires July 13, 2019                 [Page 9]
