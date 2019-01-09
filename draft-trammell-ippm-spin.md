@@ -1,12 +1,12 @@
 ---
-title: A Transport-Independent Explicit Signal for Hybrid RTT Measurement
+title: An Explicit Transport-Layer Signal for Hybrid RTT Measurement
 abbrev: Spin Bits
-docname: draft-trammell-tsvwg-spin-latest
+docname: draft-trammell-ippm-spin-latest
 date:
 category: exp
 
 ipr: trust200902
-workgroup: TSVWG
+workgroup: IP Performance Measurement WG
 keyword: Internet-Draft
 
 stand_alone: yes
@@ -22,6 +22,18 @@ author:
 
 
 informative:
+  IMC-SPIN:
+    title: Three Bits Suffice - Explicit Support for Passive Measurement of Internet Latency in QUIC and TCP (ACM IMC 2018)
+    author:
+      -
+        ins: P. De Vaere
+      -
+        ins: T. Buehler
+      -
+        ins: M. Kuehlewind
+      -
+        ins: B. Trammell
+
   PAM-RTT-PRIVACY:
     title: Revisiting the Privacy Implications of Two-Way Internet Latency Data (PAM 2018, LNCS 10771, pp. 73-84)
     author:
@@ -120,12 +132,13 @@ relatively large amount of information for sender fingerprinting
 
 This document defines a hybrid measurement {{?RFC7799}} path signal
 {{?PATH-SIGNALS=I-D.iab-path-signals}} to be embedded into a transport layer
-protocol, explicitly intended for exposing end-to-end RTT to measurement
-devices on path, following the principles elaborated in {{IPIM}}. This signal
-consists of three bits: a spin bit, which oscillates once per end-to-end RTT,
-and a two-bit Valid Edge Counter (VEC), which compensates for loss and
-reordering of the spin bit to increase fidelity of the signal in less than
-ideal network conditions.
+protocol, explicitly intended for exposing end-to-end RTT to measurement devices
+on path, following the principles elaborated in {{IPIM}}. This signal consists
+of three bits: a spin bit, which oscillates once per end-to-end RTT, and a
+two-bit Valid Edge Counter (VEC), which compensates for loss and reordering of
+the spin bit to increase fidelity of the signal in less than ideal network
+conditions. An evaluation of the spin bit and VEC mechanism in a variety of
+simulated and Internet testbed environments is given in {{IMC-SPIN}}.
 
 The document starts with a mechanism applicable to any
 transport-layer protocol, then explains how to bind the signal to a variety of
@@ -335,41 +348,32 @@ connection itself is very lossy) will cause many samples to be rejected as
 well. Observers may choose to use heuristics in addition to VEC analysis to
 increase the sample rate in challenging network or traffic environments.
 
+# Using Only the Spin Bit
+
+Note that, in the absence of loss and reordering, the single spin bit on its own
+suffices to provide one accurate RTT sample per RTT to on-path observers.
+Instead of using two additional bits for the VEC to reject bad samples caused by
+less than ideal network conditions, protocol designers can instead opt to add
+only the spin bit to the protocol, and shift the burden of correcting the RTT
+sample stream to observers, in keeping with the third principle elaborated in
+{{IPIM}}: the cost of deriving measurements from measurable protocols should be
+shifted from the participants to the measurement consumers where possible.
+Indeed, this is the approach followed by QUIC when adding the spin signal to the
+protocol (see {{transport-quic}}).
+
 # Binding the Hybrid RTT Measurement Signal to Transport Protocols
 
 The following subsections define how to bind the spin bit to various IETF
 transport protocols. As of this writing, bindings are specified for QUIC and
 TCP.
 
-## QUIC
+## QUIC {#transport-quic}
 
 This signal was originally specified for the QUIC transport protocol
 {{QUIC-TRANSPORT}}, as the encrypted design of that protocol makes passive RTT
 measurement impossible. The binding of this signal to QUIC is partially
 described in {{?QUIC-SPIN-EXP=I-D.ietf-quic-spin-exp}}, which adds the spin
 bit only (without the VEC) to QUIC for experimentation purposes.
-
-The full signal can be added to QUIC by adding the VEC mechanism to the spin
-bit mechanism already defined in {{QUIC-SPIN-EXP}}, encoding the VEC into QUIC
-short packet headers using the three bits reserved for that purpose, as shown
-in {{quic-hdr}}.
-
-~~~~~
-
- 0                   1                   2                   3
- 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-+-+-+-+-+-+-+-+-+
-|0|K|1|1|0|S|VEC|
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                Destination Connection ID (0..144)           ...
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                      Packet Number (8/16/32)                ...
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|                     Protected Payload (*)                   ...
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-~~~~~
-{: #quic-hdr title="QUIC short packet header with spin bit S and VEC"}
 
 The "latest packet" determination for QUIC is made using the QUIC packet
 number: only packets which have a packet number greater than the highest
@@ -380,7 +384,7 @@ packets; long header packets are ignored for the purposes of generating the
 signal. Since either the client or the server may start sending short header
 packets first, both sides initialize their NEXT_SPIN value to 0.
 
-## TCP
+## TCP {#transport-tcp}
 
 The signal can be added to TCP by defining bit 4 of bytes 13-14 of the TCP
 header to carry the spin bit, and bits 5 and 6 to carry the VEC, as shown in
@@ -394,7 +398,7 @@ header to carry the spin bit, and bits 5 and 6 to carry the VEC, as shown in
 |               |   |       | v | R | E | G | K | H | T | N | N |
 +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
 ~~~~~
-{: #tcp-flags title="Definition bytes 13 and 14 of TCP header with spin bit S and VEC"}
+{: #tcp-flags title="Definition of bytes 13 and 14 of TCP header with spin bit S and VEC"}
 
 The "latest packet" determination for TCP is made using the TCP sequence and
 acknowledgment numbers: only packets which have a sequence number greater than
@@ -409,6 +413,11 @@ reserved bits in byte 13 of the TCP header {{RFC0793}}, the addition of the
 signal to TCP includes a simple fallback mechanism. The client sets NEXT_SPIN
 to 1 and NEXT_VEC to 0 on its initial SYN. If this SYN is lost, the client
 disables generation of the signal for the life of the connection.
+
+A cursory initial evaluation presented in {{IMC-SPIN}} suggests that the
+deployability of a latency spin signal in the reserved bits of TCP is on the
+order of equivalent to the deployability of a latency spin signal carried in a
+newly-defined experimental TCP option {{?RFC6694}}.
 
 # Discussion
 
@@ -509,8 +518,13 @@ the general case not to do it.
 
 # IANA Considerations
 
-This document, if published as an RFC, would request the following assignments
-in the TCP Header Flags registry for the purposes of this experiment:
+This document has no current actions for IANA.
+
+Should consensus emerge that deployment of the spin bit in TCP is worth
+pursuing, a companion document submitted to the TCP Maintenance and Minor
+Extensions (TCPM) Working Group would need to request the following assignments
+in the IANA TCP Header Flags registry for the purposes of carrying the Spin Bit
+and Valid Edge Counter on TCP packets:
 
 - Bit 4: Hybrid RTT Measurement Spin Bit, as defined in this document
 - Bit 5: Hybrid RTT Measurement Valid Edge Counter, high-order bit, as defined in this document
